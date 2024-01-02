@@ -1,0 +1,5 @@
+rootProject.name = 'diary'
+include 'api'
+include 'db'
+include 'common'
+
