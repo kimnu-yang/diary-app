@@ -27,6 +27,6 @@ jobs:
       - name: Copy jar
         run: cp -Force .\api\build\libs\*.jar .\api\deploy\api-latest.jar
 
-      # 빌드된 파일을 실행한다.
+      # 빌드된 파일을 백그라운드로 실행한다.
       - name: Run jar
-        run: java -jar .\api\deploy\api-latest.jar
+        run: javaw .\api\deploy\api-latest.jar
