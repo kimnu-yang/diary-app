@@ -7,19 +7,23 @@ on:
       - closed
 
 jobs:
-  build-and-run:
+  build:
     runs-on: self-hosted
 
     steps:
       # 최신 버전의 소스를 불러온다
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
+      # 프로젝트를 빌드한다
       - name: Build Project
         id: build
         run: C:\actions-runner\_work\diary-app\diary-app\gradlew build
+        
+  run:
+    runs-on: self-hosted
 
+    steps:
+      # 프로젝트를 실행한다
       - name: Run API
-        if: steps.build.outcome == 'success'
-        run: |
-          Start-Process java -ArgumentList "-jar C:\actions-runner\_work\diary-app\diary-app\api\build\libs\api-0.0.1-SNAPSHOT.jar" -NoNewWindow
+        run: java -jar C:\actions-runner\_work\diary-app\diary-app\api\build\libs\api-0.0.1-SNAPSHOT.jar
