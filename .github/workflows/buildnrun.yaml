@@ -30,3 +30,7 @@ jobs:
       # 빌드된 파일을 백그라운드로 실행한다.
       - name: Run jar
         run: Start-Process java -ArgumentList "-jar", ".\api\deploy\api-latest.jar" -NoNewWindow
+
+      # 테스트용 퐅더 생성
+      - name: Make directory
+        run: mkdir .\api\deploy-test
