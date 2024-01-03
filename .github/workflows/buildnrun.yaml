@@ -7,7 +7,7 @@ on:
       - closed
 
 jobs:
-  build:
+  build-and-run:
     runs-on: self-hosted
 
     steps:
@@ -25,4 +25,8 @@ jobs:
 
       # 빌드 파일을 복사한다.
       - name: Copy jar
-        run: cp .\api\build\libs\*.jar .\api\deploy\
+        run: cp -f .\api\build\libs\*.jar .\api\deploy\api-latest.jar
+
+      # 빌드된 파일을 실행한다.
+      - name: Run jar
+        run: java -jar .\api\deploy\api-latest.jar
