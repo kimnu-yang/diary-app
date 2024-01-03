@@ -1,0 +1,22 @@
+name: Build and Run API on Self-hosted Runner(Windows)
+
+# 풀리퀘스트를 통한 머지가 발생할때 실행
+on:
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  build-and-run:
+    runs-on: self-hosted
+
+    steps:
+      # 최신 버전의 소스를 불러온다
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Build Project
+        run: gradlew build
+
+      - name: Run API
+        run: java -jar api/build/libs/api-0.0.1-SNAPSHOT.jar
