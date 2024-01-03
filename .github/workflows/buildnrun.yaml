@@ -25,7 +25,7 @@ jobs:
 
       # 빌드 파일을 복사한다.
       - name: Copy jar
-        run: cp -f .\api\build\libs\*.jar .\api\deploy\api-latest.jar
+        run: cp -Force .\api\build\libs\*.jar .\api\deploy\api-latest.jar
 
       # 빌드된 파일을 실행한다.
       - name: Run jar
