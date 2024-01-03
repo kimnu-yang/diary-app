@@ -29,4 +29,4 @@ jobs:
 
       # 빌드된 파일을 백그라운드로 실행한다.
       - name: Run jar
-        run: java -jar .\api\deploy\api-latest.jar
+        run: Start-Process java -ArgumentList "-jar", ".\api\deploy\api-latest.jar" -NoNewWindow
