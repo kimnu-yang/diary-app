@@ -16,7 +16,10 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Project
+        id: build
         run: C:\actions-runner\_work\diary-app\diary-app\gradlew build
 
       - name: Run API
-        run: java -jar C:\actions-runner\_work\diary-app\diary-app\api\build\libs\api-0.0.1-SNAPSHOT.jar
+        if: steps.build.outcome == 'success'
+        run: |
+          Start-Process java -ArgumentList "-jar C:\actions-runner\_work\diary-app\diary-app\api\build\libs\api-0.0.1-SNAPSHOT.jar" -NoNewWindow
