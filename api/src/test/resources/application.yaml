@@ -1,0 +1,21 @@
+spring:
+  jpa:
+    show-sql: true
+    properties:
+      format_sql: true
+      dialect: org.hibernate.dialect.MySQL8Dialect
+    hibernate:
+      ddl-auto: update
+  datasource:
+    url: jdbc:mysql://localhost:3307/diary?useSSL=false&useUnicode=true&allowPublicKeyRetrieval=true
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: root123!
+
+token:
+  secret:
+    key: DiaryAPIJWTSecretKeyValueYangKangDuoplay
+  access-token:
+    plus-hour: 1
+  refresh-token:
+    plus-hour: 12
