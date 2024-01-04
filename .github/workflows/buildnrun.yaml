@@ -1,4 +1,4 @@
-name: Build and Run API on Self-hosted Runner(Windows)
+name: Build and Run API on Self-hosted Runner
 
 # 풀리퀘스트를 통한 머지가 발생할때 실행
 on:
@@ -7,7 +7,7 @@ on:
       - closed
 
 jobs:
-  build-and-run:
+  build:
     runs-on: self-hosted
 
     steps:
@@ -26,7 +26,3 @@ jobs:
       # 빌드 파일을 복사한다.
       - name: Copy jar
         run: cp -Force .\api\build\libs\*.jar .\api\deploy\api-latest.jar
-
-      # 빌드된 파일을 백그라운드로 실행한다.
-      - name: Run jar
-        run: .\api\diary-app.bat
