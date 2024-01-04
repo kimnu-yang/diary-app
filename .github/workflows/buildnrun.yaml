@@ -15,6 +15,10 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      # 스크립트 사용을 임시적으로 허용한다
+      - name: Grant script permission
+        run: Set-ExecutionPolicy RemoteSigned -Scope Process -Force
+
       # 프로젝트를 빌드한다
       - name: Build Project
         run: .\gradlew build
