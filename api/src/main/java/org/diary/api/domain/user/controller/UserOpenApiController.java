@@ -25,9 +25,9 @@ public class UserOpenApiController {
     public Api<UserResponse> register(
             @Valid
             @RequestBody
-            Api<UserRegisterRequest> request
+            UserRegisterRequest request
     ){
-        var response = userBusiness.register(request.getBody());
+        var response = userBusiness.register(request);
         return Api.OK(response);
     }
 
@@ -36,9 +36,9 @@ public class UserOpenApiController {
     public Api<TokenResponse> login(
             @Valid
             @RequestBody
-            Api<UserLoginRequest> request
+            UserLoginRequest request
     ){
-        var response = userBusiness.login(request.getBody());
+        var response = userBusiness.login(request);
         return Api.OK(response);
     }
 }
