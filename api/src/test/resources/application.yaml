@@ -19,3 +19,10 @@ token:
     plus-hour: 1
   refresh-token:
     plus-hour: 12
+
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      enabled: true
