@@ -2,7 +2,7 @@ package org.diary.api.domain.user.model;
 
 
 import io.jsonwebtoken.lang.Assert;
-import org.diary.api.domain.user.common.TestConfig;
+import org.diary.api.common.config.TestConfig;
 import org.diary.db.user.UserEntity;
 import org.diary.db.user.UserRepository;
 import org.diary.db.user.enums.UserStatus;

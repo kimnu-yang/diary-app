@@ -2,7 +2,7 @@ package org.diary.api.domain.user.controller;
 
 import org.diary.api.domain.token.controller.model.TokenResponse;
 import org.diary.api.domain.user.business.UserBusiness;
-import org.diary.api.domain.user.common.TestMock;
+import org.diary.api.common.mock.TestMock;
 import org.diary.api.domain.user.controller.model.UserLoginRequest;
 import org.diary.api.domain.user.controller.model.UserRegisterRequest;
 import org.diary.api.domain.user.fixture.UserFixture;

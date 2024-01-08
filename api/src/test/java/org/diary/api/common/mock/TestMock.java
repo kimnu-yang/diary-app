@@ -1,4 +1,4 @@
-package org.diary.api.domain.user.common;
+package org.diary.api.common.mock;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.lang.Assert;

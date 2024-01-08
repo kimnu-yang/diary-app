@@ -1,22 +1,13 @@
 package org.diary.api.domain.user.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.lang.Assert;
 import org.diary.api.domain.user.business.UserBusiness;
-import org.diary.api.domain.user.common.TestConfig;
-import org.diary.api.domain.user.common.TestMock;
+import org.diary.api.common.mock.TestMock;
 import org.diary.api.domain.user.controller.model.UserLoginRequest;
 import org.diary.api.domain.user.controller.model.UserRegisterRequest;
 import org.diary.api.domain.user.fixture.UserFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.http.MediaType;
-import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class UserOpenApiControllerTest extends TestMock {
 

@@ -1,4 +1,4 @@
-package org.diary.api.domain.user.common;
+package org.diary.api.common.config;
 
 import org.diary.api.ApiApplication;
 import org.springframework.boot.test.context.SpringBootTest;
