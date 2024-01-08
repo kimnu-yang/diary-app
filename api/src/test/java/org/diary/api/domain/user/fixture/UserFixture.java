@@ -1,10 +1,7 @@
 package org.diary.api.domain.user.fixture;
 
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
 import org.diary.api.domain.user.controller.model.UserLoginRequest;
 import org.diary.api.domain.user.controller.model.UserRegisterRequest;
-import org.diary.db.user.UserEntity;
 
 public class UserFixture {
 
