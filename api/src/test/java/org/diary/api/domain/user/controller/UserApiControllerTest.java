@@ -20,7 +20,7 @@ class UserApiControllerTest extends TestMvcConfig {
     void me() {
         // given
         // 유저 생성
-        UserRegisterRequest req = UserFixture.anUserFixture().RegisterRequestBuild();
+        UserRegisterRequest req = UserFixture.anUserFixture().registerRequestBuild();
 
         userBusiness.register(req);
 

@@ -41,7 +41,7 @@ public class UserFixture {
         );
     }
 
-    public UserRegisterRequest RegisterRequestBuild() {
+    public UserRegisterRequest registerRequestBuild() {
         return new UserRegisterRequest(
                 name,
                 email,

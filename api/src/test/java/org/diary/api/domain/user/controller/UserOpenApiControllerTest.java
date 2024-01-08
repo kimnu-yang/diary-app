@@ -20,7 +20,7 @@ class UserOpenApiControllerTest extends TestMvcConfig {
     void register() {
         // given
         // 가입 데이터
-        UserRegisterRequest request = UserFixture.anUserFixture().RegisterRequestBuild();
+        UserRegisterRequest request = UserFixture.anUserFixture().registerRequestBuild();
 
         // when
         String result = doPost(BASE_URL + "/register", request);

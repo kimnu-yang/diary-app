@@ -63,7 +63,7 @@ public class TestMvcConfig {
 
     public <T> String doPostWithToken(String url, T obj, String token) {
         try {
-            mvc.perform(post(url)
+            result = mvc.perform(post(url)
                     .content(mapper.writeValueAsBytes(obj)) //HTTP Body에 데이터를 담는다
                     .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
                     .header("authorization-token", token)
@@ -79,7 +79,7 @@ public class TestMvcConfig {
 
     public <T> String doPost(String url, T obj) {
         try {
-            mvc.perform(post(url)
+            result = mvc.perform(post(url)
                     .content(mapper.writeValueAsBytes(obj)) //HTTP Body에 데이터를 담는다
                     .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
             ).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn()
