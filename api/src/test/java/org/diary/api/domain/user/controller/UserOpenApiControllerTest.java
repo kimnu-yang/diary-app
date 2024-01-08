@@ -2,14 +2,14 @@ package org.diary.api.domain.user.controller;
 
 import io.jsonwebtoken.lang.Assert;
 import org.diary.api.domain.user.business.UserBusiness;
-import org.diary.api.common.mock.TestMock;
+import org.diary.api.common.config.TestMvcConfig;
 import org.diary.api.domain.user.controller.model.UserLoginRequest;
 import org.diary.api.domain.user.controller.model.UserRegisterRequest;
 import org.diary.api.domain.user.fixture.UserFixture;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class UserOpenApiControllerTest extends TestMock {
+class UserOpenApiControllerTest extends TestMvcConfig {
 
     @Autowired
     private UserBusiness userBusiness;
@@ -26,7 +26,7 @@ class UserOpenApiControllerTest extends TestMock {
         String result = doPost(BASE_URL + "/register", request);
 
         // then
-         System.out.println(result);
+        System.out.println(result);
     }
 
     @Test
@@ -43,9 +43,9 @@ class UserOpenApiControllerTest extends TestMock {
         UserLoginRequest request = UserFixture.anUserFixture().loginRequestBuild();
 
         // when
-       String result = doPost(BASE_URL + "/login", request);
+        String result = doPost(BASE_URL + "/login", request);
 
         // then
-       System.out.println(result);
+        System.out.println(result);
     }
 }
