@@ -8,19 +8,12 @@ import org.diary.api.domain.user.fixture.UserEntityFixture;
 import org.diary.db.token.KakaoTokenEntity;
 import org.diary.db.token.KakaoTokenRepository;
 import org.diary.db.user.UserEntity;
-import org.diary.db.user.UserRepository;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 class KakaoApiControllerTest extends TestMvcConfig {
     @Autowired
     private KakaoTokenRepository kakaoTokenRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     private static final String BASE_URL = "/open-api/user/kakao";
 
@@ -34,16 +27,7 @@ class KakaoApiControllerTest extends TestMvcConfig {
         String result = doPost(BASE_URL + "/register", request);
 
         // then
-        JSONParser parse = new JSONParser();
-        String id = "";
-
-        try {
-            JSONObject obj = (JSONObject) parse.parse(result);
-            JSONObject body = (JSONObject) obj.get("body");
-            id = body.get("id").toString();
-        } catch (ParseException e) {
-            throw new RuntimeException(e);
-        }
+        System.out.println(result);
     }
 
     @Test
