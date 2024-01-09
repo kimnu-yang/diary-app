@@ -1,7 +1,6 @@
 package org.diary.api.common;
 
 import org.diary.api.domain.diary.controller.model.DiaryRegisterRequest;
-import org.diary.api.domain.diary.controller.model.DiaryUpdateRequest;
 import org.diary.api.domain.diary.fixture.DiaryFixture;
 import org.diary.db.diary.DiaryEntity;
 import org.diary.db.diary.DiaryRepository;
@@ -9,13 +8,13 @@ import org.diary.db.user.enums.DiaryStatus;
 
 public class DiaryCommon {
 
-    public Long diary_id;
+    public Long diaryId;
 
     DiaryRegisterRequest diaryRegisterRequest = DiaryFixture.anUserFixture().diaryRegisterRequest();
 
-    public DiaryCommon(DiaryRepository diaryRepository, Long user_id){
-        diary_id = diaryRepository.save(DiaryEntity.builder()
-                .userId(user_id)
+    public DiaryCommon(DiaryRepository diaryRepository, Long userId) {
+        diaryId = diaryRepository.save(DiaryEntity.builder()
+                .userId(userId)
                 .title(diaryRegisterRequest.getTitle())
                 .content(diaryRegisterRequest.getContent())
                 .location(diaryRegisterRequest.getLocation())
