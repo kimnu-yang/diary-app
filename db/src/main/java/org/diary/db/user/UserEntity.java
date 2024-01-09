@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.diary.db.BaseEntity;
 import org.diary.db.user.enums.UserStatus;
-import org.diary.db.user.enums.UserType;
 
 import java.time.LocalDateTime;
 
@@ -25,9 +24,9 @@ public class UserEntity extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private UserStatus status;
 
-    @Column(length = 50, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private UserType type;
+    private Long kakaoUserId;
+
+    private Long googleUserId;
 
     private LocalDateTime registeredAt;
 

@@ -2,17 +2,18 @@ package org.diary.api.domain.user.controller.model;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class KakaoLoginRequest {
+@Builder
+public class UserKakaoLoginRequest {
+    @NotBlank
+    private Long id;
 
     @NotBlank
-    private Long userId;
-
-    @NotBlank
-    private String accessToken;
+    private Long kakaoUserId;
 }

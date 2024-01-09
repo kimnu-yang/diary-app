@@ -1,8 +1,11 @@
 package org.diary.api.domain.user.fixture;
 
+import org.diary.api.domain.user.controller.model.UserGoogleLoginRequest;
+import org.diary.api.domain.user.controller.model.UserGoogleRegisterRequest;
+import org.diary.api.domain.user.controller.model.UserKakaoLoginRequest;
+import org.diary.api.domain.user.controller.model.UserKakaoRegisterRequest;
 import org.diary.db.user.UserEntity;
 import org.diary.db.user.enums.UserStatus;
-import org.diary.db.user.enums.UserType;
 
 import java.time.LocalDateTime;
 
@@ -12,7 +15,9 @@ public class UserEntityFixture {
 
     private UserStatus status = UserStatus.REGISTERED;
 
-    private UserType type = UserType.Kakao;
+    private Long kakaoUserId = 134616161L;
+
+    private Long googleUserId = 535135412123L;
 
     private LocalDateTime registeredAt = LocalDateTime.now();
 
@@ -30,9 +35,28 @@ public class UserEntityFixture {
         return this;
     }
 
+    public UserEntity userKakaoEntityBuild() {
+        return UserEntity.builder().kakaoUserId(kakaoUserId).status(status).registeredAt(registeredAt).lastLoginAt(lastLoginAt).unregisteredAt(unregisteredAt).build();
+    }
 
-    public UserEntity userEntityBuild() {
-        return UserEntity.builder().type(type).status(status).registeredAt(registeredAt).lastLoginAt(lastLoginAt).unregisteredAt(unregisteredAt).build();
+    public UserEntity userGoogleEntityBuild() {
+        return UserEntity.builder().googleUserId(googleUserId).status(status).registeredAt(registeredAt).lastLoginAt(lastLoginAt).unregisteredAt(unregisteredAt).build();
+    }
+
+    public UserKakaoLoginRequest kakaoLoginRequestBuild() {
+        return UserKakaoLoginRequest.builder().id(id).kakaoUserId(kakaoUserId).build();
+    }
+
+    public UserKakaoRegisterRequest kakaoRegisterRequestBuild() {
+        return UserKakaoRegisterRequest.builder().kakaoUserId(kakaoUserId).build();
+    }
+
+    public UserGoogleLoginRequest googleLoginRequestBuild() {
+        return UserGoogleLoginRequest.builder().id(id).googleUserId(googleUserId).build();
+    }
+
+    public UserGoogleRegisterRequest googleRegisterRequestBuild() {
+        return UserGoogleRegisterRequest.builder().googleUserId(googleUserId).build();
     }
 
 

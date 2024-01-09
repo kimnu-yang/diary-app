@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.diary.db.user.enums.UserStatus;
-import org.diary.db.user.enums.UserType;
 
 import java.time.LocalDateTime;
 
@@ -19,7 +18,9 @@ public class UserResponse {
 
     private UserStatus status;
 
-    private UserType type;
+    private Long kakaoUserId;
+
+    private Long googleUserId;
 
     private LocalDateTime registeredAt;
 

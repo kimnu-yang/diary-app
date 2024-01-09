@@ -4,9 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.Converter;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
-import org.diary.api.domain.user.controller.model.KakaoRegisterRequest;
+import org.diary.api.domain.user.controller.model.UserGoogleRegisterRequest;
+import org.diary.api.domain.user.controller.model.UserKakaoRegisterRequest;
 import org.diary.api.domain.user.controller.model.UserResponse;
-import org.diary.db.token.KakaoTokenEntity;
 import org.diary.db.user.UserEntity;
 
 import java.util.Optional;
@@ -15,18 +15,19 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserConverter {
 
-    public KakaoTokenEntity toKakaoEntity(KakaoRegisterRequest request) {
-
+    public UserEntity toUserEntityFromKakao(UserKakaoRegisterRequest request) {
         return Optional.ofNullable(request)
-                .map(it -> {
-                    return KakaoTokenEntity.builder()
-                            .accessToken(request.getAccessToken())
-                            .accessTokenExpireAt(request.getAccessTokenExpireAt())
-                            .idToken(request.getIdToken())
-                            .refreshToken(request.getRefreshToken())
-                            .scopes(request.getScopes())
-                            .build();
-                })
+                .map(it -> UserEntity.builder()
+                        .kakaoUserId(request.getKakaoUserId())
+                        .build())
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
+    }
+
+    public UserEntity toUserEntityFromGoogle(UserGoogleRegisterRequest request) {
+        return Optional.ofNullable(request)
+                .map(it -> UserEntity.builder()
+                        .googleUserId(request.getGoogleUserId())
+                        .build())
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
     }
 
@@ -41,10 +42,11 @@ public class UserConverter {
                     return UserResponse.builder()
                             .id(userEntity.getId())
                             .status(userEntity.getStatus())
-                            .type(userEntity.getType())
-//                            .registeredAt(userEntity.getRegisteredAt())
-//                            .unregisteredAt(userEntity.getUnregisteredAt())
-//                            .lastLoginAt(userEntity.getLastLoginAt())
+                            .kakaoUserId(userEntity.getKakaoUserId())
+                            .googleUserId(userEntity.getGoogleUserId())
+                            .registeredAt(userEntity.getRegisteredAt())
+                            .unregisteredAt(userEntity.getUnregisteredAt())
+                            .lastLoginAt(userEntity.getLastLoginAt())
                             .build();
                 })
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserEntity Null"));

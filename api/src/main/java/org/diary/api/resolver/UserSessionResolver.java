@@ -38,14 +38,15 @@ public class UserSessionResolver implements HandlerMethodArgumentResolver {
 
         // request context holder에서 값 찾아오기
         var requestContext = RequestContextHolder.getRequestAttributes();
-        var userId = requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+        var userId = requestContext != null ? requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST) : null;
 
-        var userEntity = userService.getUserWithThrow(Long.parseLong(userId.toString()));
+        var userEntity = userService.getUserWithThrow(Long.parseLong(userId != null ? userId.toString() : "0"));
 
         // 사용자 정보 셋팅
         return UserEntity.builder()
                 .id(userEntity.getId())
-                .type(userEntity.getType())
+                .kakaoUserId(userEntity.getKakaoUserId())
+                .googleUserId(userEntity.getGoogleUserId())
                 .status(userEntity.getStatus())
                 .registeredAt(userEntity.getRegisteredAt())
                 .unregisteredAt(userEntity.getUnregisteredAt())
