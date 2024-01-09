@@ -5,9 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.token.controller.model.TokenResponse;
 import org.diary.api.domain.user.business.UserBusiness;
-import org.diary.api.domain.user.controller.model.UserLoginRequest;
-import org.diary.api.domain.user.controller.model.UserRegisterRequest;
-import org.diary.api.domain.user.controller.model.UserResponse;
+import org.diary.api.domain.user.controller.model.*;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,25 +18,68 @@ public class UserOpenApiController {
 
     private final UserBusiness userBusiness;
 
-    // 사용자 가입 요청
-    @PostMapping("/register")
+    /**
+     * 회원가입
+     *
+     * @param request - 카카오 ID
+     * @return Api<UserResponse>
+     */
+    @PostMapping("/kakao/register")
     public Api<UserResponse> register(
             @Valid
             @RequestBody
-            UserRegisterRequest request
-    ){
-        var response = userBusiness.register(request);
+            UserKakaoRegisterRequest request
+    ) {
+        var response = userBusiness.kakaoRegister(request);
         return Api.OK(response);
     }
 
-    // 로그인
-    @PostMapping("/login")
+    /**
+     * 로그인
+     *
+     * @param request - 로그인 정보
+     * @return Api<TokenResponse>
+     */
+    @PostMapping("/kakao/login")
     public Api<TokenResponse> login(
             @Valid
             @RequestBody
-            UserLoginRequest request
-    ){
-        var response = userBusiness.login(request);
+            UserKakaoLoginRequest request
+    ) {
+        var response = userBusiness.kakaoLogin(request);
+        return Api.OK(response);
+    }
+
+
+    /**
+     * 회원가입
+     *
+     * @param request - 카카오 ID
+     * @return Api<UserResponse>
+     */
+    @PostMapping("/google/register")
+    public Api<UserResponse> register(
+            @Valid
+            @RequestBody
+            UserGoogleRegisterRequest request
+    ) {
+        var response = userBusiness.googleRegister(request);
+        return Api.OK(response);
+    }
+
+    /**
+     * 로그인
+     *
+     * @param request - 로그인 정보
+     * @return Api<TokenResponse>
+     */
+    @PostMapping("/google/login")
+    public Api<TokenResponse> login(
+            @Valid
+            @RequestBody
+            UserGoogleLoginRequest request
+    ) {
+        var response = userBusiness.googleLogin(request);
         return Api.OK(response);
     }
 }

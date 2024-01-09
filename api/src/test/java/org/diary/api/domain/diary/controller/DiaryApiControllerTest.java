@@ -35,7 +35,7 @@ public class DiaryApiControllerTest extends TestMvcConfig {
 
         // given(값 설정)
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness); // - User 정보
-        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.user_id);
+        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.userId);
 
         // when(실행)
         String result = doGetWithToken(BASE_URL, userCommon.token);
@@ -50,10 +50,10 @@ public class DiaryApiControllerTest extends TestMvcConfig {
 
         // given(값 설정)
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness); // - User 정보
-        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.user_id);
+        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.userId);
 
         // when(실행)
-        String result = doGetWithToken(BASE_URL + "/" +diaryCommon.diary_id, userCommon.token);
+        String result = doGetWithToken(BASE_URL + "/" +diaryCommon.diaryId, userCommon.token);
 
         // then(검증)
         JsonNode resultJson = objectMapper.readTree(result);
@@ -80,12 +80,12 @@ public class DiaryApiControllerTest extends TestMvcConfig {
 
         // given(값 설정)
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness);  // - 유저 생성
-        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.user_id); // - 다이어리 생성
-        Long diary_id = diaryCommon.diary_id; // - 다이어리 정보
+        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.userId); // - 다이어리 생성
+        Long diaryId = diaryCommon.diaryId; // - 다이어리 정보
         DiaryUpdateRequest diaryUpdateRequest = DiaryFixture.anUserFixture().diaryUpdateRequest(); // - 수정될 데이터
 
         // when(실행)
-        String diaryUpdateResultJson = doPatchWithToken(BASE_URL + "/" + diary_id, diaryUpdateRequest, userCommon.token);
+        String diaryUpdateResultJson = doPatchWithToken(BASE_URL + "/" + diaryId, diaryUpdateRequest, userCommon.token);
 
         // then(검증)
         JsonNode updateResultJson = objectMapper.readTree(diaryUpdateResultJson);
@@ -97,11 +97,11 @@ public class DiaryApiControllerTest extends TestMvcConfig {
 
         // given(값 설정)
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness);  // - 유저 생성
-        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.user_id); // - 다이어리 생성
-        Long diary_id = diaryCommon.diary_id; // - 다이어리 정보
+        DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.userId); // - 다이어리 생성
+        Long diaryId = diaryCommon.diaryId; // - 다이어리 정보
 
         // when(실행)
-        String diaryUpdateResultJson = doDeleteWithToken(BASE_URL + "/" + diary_id, userCommon.token);
+        String diaryUpdateResultJson = doDeleteWithToken(BASE_URL + "/" + diaryId, userCommon.token);
 
         // then(검증)
         JsonNode updateResultJson = objectMapper.readTree(diaryUpdateResultJson);

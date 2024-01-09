@@ -4,7 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.Converter;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
-import org.diary.api.domain.user.controller.model.UserRegisterRequest;
+import org.diary.api.domain.user.controller.model.UserGoogleRegisterRequest;
+import org.diary.api.domain.user.controller.model.UserKakaoRegisterRequest;
 import org.diary.api.domain.user.controller.model.UserResponse;
 import org.diary.db.user.UserEntity;
 
@@ -14,20 +15,24 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserConverter {
 
-    public UserEntity toEntity(UserRegisterRequest request){
-
+    public UserEntity toUserEntityFromKakao(UserKakaoRegisterRequest request) {
         return Optional.ofNullable(request)
-                .map(it -> {
-
-                    return  UserEntity.builder()
-                            .name(request.getName())
-                            .email(request.getEmail())
-                            .password(request.getPassword())
-                            .address(request.getAddress())
-                            .build();
-                })
+                .map(it -> UserEntity.builder()
+                        .kakaoUserId(request.getKakaoUserId())
+                        .build())
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
     }
+
+    public UserEntity toUserEntityFromGoogle(UserGoogleRegisterRequest request) {
+        return Optional.ofNullable(request)
+                .map(it -> UserEntity.builder()
+                        .googleUserId(request.getGoogleUserId())
+                        .build())
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
+    }
+
+    // 구글 컨버터
+    // public GoogleTokenEntity toGoogleEntity(GoogleRegisterRequest request) {}
 
     public UserResponse toResponse(UserEntity userEntity) {
 
@@ -36,11 +41,9 @@ public class UserConverter {
                     //to response
                     return UserResponse.builder()
                             .id(userEntity.getId())
-                            .name(userEntity.getName())
                             .status(userEntity.getStatus())
-                            .email(userEntity.getEmail())
-                            .password(userEntity.getPassword())
-                            .address(userEntity.getAddress())
+                            .kakaoUserId(userEntity.getKakaoUserId())
+                            .googleUserId(userEntity.getGoogleUserId())
                             .registeredAt(userEntity.getRegisteredAt())
                             .unregisteredAt(userEntity.getUnregisteredAt())
                             .lastLoginAt(userEntity.getLastLoginAt())

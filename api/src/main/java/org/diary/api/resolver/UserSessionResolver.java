@@ -2,8 +2,8 @@ package org.diary.api.resolver;
 
 import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.UserSession;
-import org.diary.api.domain.user.model.User;
 import org.diary.api.domain.user.service.UserService;
+import org.diary.db.user.UserEntity;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -27,29 +27,27 @@ public class UserSessionResolver implements HandlerMethodArgumentResolver {
         var annotation = parameter.hasParameterAnnotation(UserSession.class);
 
         // 2. 파라미터 타입 체크
-        var parameterType = parameter.getParameterType().equals(User.class);
+        var parameterType = parameter.getParameterType().equals(UserEntity.class);
 
         return (annotation && parameterType);
     }
 
     @Override
-    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) throws Exception {
+    public Object resolveArgument(MethodParameter parameter, ModelAndViewContainer mavContainer, NativeWebRequest webRequest, WebDataBinderFactory binderFactory) {
         // support parameter 에서 true 반환시 여기 실행
 
         // request context holder에서 값 찾아오기
         var requestContext = RequestContextHolder.getRequestAttributes();
-        var userId = requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST);
+        var userId = requestContext != null ? requestContext.getAttribute("userId", RequestAttributes.SCOPE_REQUEST) : null;
 
-        var userEntity = userService.getUserWithThrow(Long.parseLong(userId.toString()));
+        var userEntity = userService.getUserWithThrow(Long.parseLong(userId != null ? userId.toString() : "0"));
 
         // 사용자 정보 셋팅
-        return User.builder()
+        return UserEntity.builder()
                 .id(userEntity.getId())
-                .name(userEntity.getName())
-                .email(userEntity.getEmail())
+                .kakaoUserId(userEntity.getKakaoUserId())
+                .googleUserId(userEntity.getGoogleUserId())
                 .status(userEntity.getStatus())
-                .password(userEntity.getPassword())
-                .address(userEntity.getAddress())
                 .registeredAt(userEntity.getRegisteredAt())
                 .unregisteredAt(userEntity.getUnregisteredAt())
                 .lastLoginAt(userEntity.getLastLoginAt())

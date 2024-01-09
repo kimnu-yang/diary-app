@@ -16,15 +16,11 @@ public class UserResponse {
 
     private Long id;
 
-    private String name;
-
-    private String email;
-
-    private String password;
-
     private UserStatus status;
 
-    private String address;
+    private Long kakaoUserId;
+
+    private Long googleUserId;
 
     private LocalDateTime registeredAt;
 
