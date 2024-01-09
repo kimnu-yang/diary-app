@@ -12,8 +12,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
@@ -29,6 +28,21 @@ public class TestMvcConfig {
     private ObjectMapper mapper;
 
     private String result;
+
+    public <T> String doGetWithToken(String url, String token) {
+        try {
+            result = mvc.perform(get(url)
+                            .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
+                            .header("authorization-token", token)
+                    ).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn()
+                    .getResponse().getContentAsString();
+        } catch (Exception e) {
+            // Exception 발생 유도
+            Assert.isTrue(false, ">> Error [" + e.getMessage() + "]");
+        }
+
+        return result;
+    }
 
     public <T> String doGetWithToken(String url, T body, String token) {
         try {
@@ -84,6 +98,37 @@ public class TestMvcConfig {
                     .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
             ).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn()
             .getResponse().getContentAsString();
+        } catch (Exception e) {
+            // Exception 발생 유도
+            Assert.isTrue(false, ">> Error [" + e.getMessage() + "]");
+        }
+
+        return result;
+    }
+
+    public <T> String doPatchWithToken(String url, T obj, String token) {
+        try {
+            result = mvc.perform(patch(url)
+                            .content(mapper.writeValueAsBytes(obj)) //HTTP Body에 데이터를 담는다
+                            .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
+                            .header("authorization-token", token)
+                    ).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn()
+                    .getResponse().getContentAsString();
+        } catch (Exception e) {
+            // Exception 발생 유도
+            Assert.isTrue(false, ">> Error [" + e.getMessage() + "]");
+        }
+
+        return result;
+    }
+
+    public <T> String doDeleteWithToken(String url, String token) {
+        try {
+            result = mvc.perform(delete(url)
+                            .contentType(MediaType.APPLICATION_JSON) //보내는 데이터의 타입을 명시
+                            .header("authorization-token", token)
+                    ).andExpect(status().isOk()).andDo(MockMvcResultHandlers.print()).andReturn()
+                    .getResponse().getContentAsString();
         } catch (Exception e) {
             // Exception 발생 유도
             Assert.isTrue(false, ">> Error [" + e.getMessage() + "]");
