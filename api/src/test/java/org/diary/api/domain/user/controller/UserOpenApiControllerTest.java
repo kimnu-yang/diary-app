@@ -11,7 +11,7 @@ import org.diary.db.user.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class KakaoApiControllerTest extends TestMvcConfig {
+class UserOpenApiControllerTest extends TestMvcConfig {
     @Autowired
     private KakaoTokenRepository kakaoTokenRepository;
 

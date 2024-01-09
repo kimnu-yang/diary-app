@@ -15,8 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/open-api/user/kakao")
-public class KakaoApiController {
+@RequestMapping("/open-api/user")
+public class UserOpenApiController {
 
     private final UserBusiness userBusiness;
 
@@ -26,7 +26,7 @@ public class KakaoApiController {
      * @param request - 회원가입 정보 (카카오 엑세스 토큰 정보)
      * @return Api<UserResponse>
      */
-    @PostMapping("/register")
+    @PostMapping("/kakao/register")
     public Api<UserResponse> register(
             @Valid
             @RequestBody
@@ -42,7 +42,7 @@ public class KakaoApiController {
      * @param request - 로그인 정보
      * @return Api<TokenResponse>
      */
-    @PostMapping("/login")
+    @PostMapping("/kakao/login")
     public Api<TokenResponse> login(
             @Valid
             @RequestBody
@@ -51,4 +51,7 @@ public class KakaoApiController {
         var response = userBusiness.login(request);
         return Api.OK(response);
     }
+
+
+
 }
