@@ -1,6 +1,5 @@
 package org.diary.api.domain.user.controller.model;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -9,18 +8,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserRegisterRequest {
+public class KakaoLoginRequest {
 
     @NotBlank
-    private String name;
+    private Long userId;
 
     @NotBlank
-    @Email
-    private String email;
-
-    @NotBlank
-    private String address;
-
-    @NotBlank
-    private String password;
+    private String accessToken;
 }

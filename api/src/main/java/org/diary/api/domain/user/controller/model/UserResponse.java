@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.diary.db.user.enums.UserStatus;
+import org.diary.db.user.enums.UserType;
 
 import java.time.LocalDateTime;
 
@@ -16,15 +17,9 @@ public class UserResponse {
 
     private Long id;
 
-    private String name;
-
-    private String email;
-
-    private String password;
-
     private UserStatus status;
 
-    private String address;
+    private UserType type;
 
     private LocalDateTime registeredAt;
 

@@ -4,8 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.Converter;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
-import org.diary.api.domain.user.controller.model.UserRegisterRequest;
+import org.diary.api.domain.user.controller.model.KakaoRegisterRequest;
 import org.diary.api.domain.user.controller.model.UserResponse;
+import org.diary.db.token.KakaoTokenEntity;
 import org.diary.db.user.UserEntity;
 
 import java.util.Optional;
@@ -14,20 +15,23 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserConverter {
 
-    public UserEntity toEntity(UserRegisterRequest request){
+    public KakaoTokenEntity toKakaoEntity(KakaoRegisterRequest request) {
 
         return Optional.ofNullable(request)
                 .map(it -> {
-
-                    return  UserEntity.builder()
-                            .name(request.getName())
-                            .email(request.getEmail())
-                            .password(request.getPassword())
-                            .address(request.getAddress())
+                    return KakaoTokenEntity.builder()
+                            .accessToken(request.getAccessToken())
+                            .accessTokenExpireAt(request.getAccessTokenExpireAt())
+                            .idToken(request.getIdToken())
+                            .refreshToken(request.getRefreshToken())
+                            .scopes(request.getScopes())
                             .build();
                 })
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
     }
+
+    // 구글 컨버터
+    // public GoogleTokenEntity toGoogleEntity(GoogleRegisterRequest request) {}
 
     public UserResponse toResponse(UserEntity userEntity) {
 
@@ -36,14 +40,11 @@ public class UserConverter {
                     //to response
                     return UserResponse.builder()
                             .id(userEntity.getId())
-                            .name(userEntity.getName())
                             .status(userEntity.getStatus())
-                            .email(userEntity.getEmail())
-                            .password(userEntity.getPassword())
-                            .address(userEntity.getAddress())
-                            .registeredAt(userEntity.getRegisteredAt())
-                            .unregisteredAt(userEntity.getUnregisteredAt())
-                            .lastLoginAt(userEntity.getLastLoginAt())
+                            .type(userEntity.getType())
+//                            .registeredAt(userEntity.getRegisteredAt())
+//                            .unregisteredAt(userEntity.getUnregisteredAt())
+//                            .lastLoginAt(userEntity.getLastLoginAt())
                             .build();
                 })
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserEntity Null"));
