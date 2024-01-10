@@ -1,4 +1,4 @@
-package org.diary.db.option;
+package org.diary.db.setting;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

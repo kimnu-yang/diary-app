@@ -1,13 +1,13 @@
-package org.diary.api.domain.option;
+package org.diary.api.domain.setting;
 
 import io.jsonwebtoken.lang.Assert;
 import org.diary.api.common.UserCommon;
 import org.diary.api.common.config.TestConfig;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
-import org.diary.api.domain.option.fixture.SettingEntityFixture;
-import org.diary.db.option.SettingEntity;
-import org.diary.db.option.SettingRepository;
+import org.diary.api.domain.setting.fixture.SettingEntityFixture;
+import org.diary.db.setting.SettingEntity;
+import org.diary.db.setting.SettingRepository;
 import org.diary.db.user.UserRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +28,7 @@ public class SettingTest extends TestConfig {
         // 유저 생성
         UserCommon common = new UserCommon(userRepository);
 
-        SettingEntity entity = SettingEntityFixture.anOptionFixture().optionFixtureUserId(common.userId).optionEntityBuild();
+        SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
         entity.setUserId(common.userId);
 
         // when
@@ -51,12 +51,12 @@ public class SettingTest extends TestConfig {
         // 유저 생성
         UserCommon common = new UserCommon(userRepository);
 
-        SettingEntity entity = SettingEntityFixture.anOptionFixture().optionFixtureUserId(common.userId).optionEntityBuild();
+        SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
         entity.setUserId(common.userId);
 
         // 해당 유저로 세팅값 저장
         settingRepository.save(entity);
-        SettingEntity entity2 = SettingEntityFixture.anOptionFixture().optionFixtureUserId(common.userId).optionEntityBuild();
+        SettingEntity entity2 = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
         entity2.setUserId(common.userId);
         entity2.setName("findUserTest");
         settingRepository.save(entity2);
@@ -76,7 +76,7 @@ public class SettingTest extends TestConfig {
         UserCommon common = new UserCommon(userRepository);
 
         // when
-        SettingEntity entity = SettingEntityFixture.anOptionFixture().optionFixtureUserId(common.userId).optionFixtureName("del_option").optionEntityBuild();
+        SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingFixtureName("del_setting").settingEntityBuild();
         entity.setUserId(common.userId);
 
         SettingEntity save = settingRepository.save(entity);
