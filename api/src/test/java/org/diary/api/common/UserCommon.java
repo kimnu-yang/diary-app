@@ -23,4 +23,10 @@ public class UserCommon {
                 .status(UserStatus.REGISTERED)
                 .build()).getAccessToken();
     }
+
+    public UserCommon(UserRepository userRepository) {
+        UserEntity newUser = userRepository.save(user);
+
+        this.userId = newUser.getId();
+    }
 }
