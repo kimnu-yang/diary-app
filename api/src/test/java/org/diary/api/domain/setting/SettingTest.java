@@ -29,7 +29,6 @@ public class SettingTest extends TestConfig {
         UserCommon common = new UserCommon(userRepository);
 
         SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
-        entity.setUserId(common.userId);
 
         // when
         // 이미 있는 경우 api 오류
@@ -51,22 +50,17 @@ public class SettingTest extends TestConfig {
         // 유저 생성
         UserCommon common = new UserCommon(userRepository);
 
-        SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
-        entity.setUserId(common.userId);
+        List<SettingEntity> settings = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingsEntityBuild();
 
         // 해당 유저로 세팅값 저장
-        settingRepository.save(entity);
-        SettingEntity entity2 = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
-        entity2.setUserId(common.userId);
-        entity2.setName("findUserTest");
-        settingRepository.save(entity2);
+        settingRepository.saveAll(settings);
 
         // when
         // 이미 있는 경우 api 오류
         List<SettingEntity> result = settingRepository.findByUserId(common.userId);
 
         // then
-        Assert.state(result.size() >= 2, "조회 오류 발생");
+        Assert.state(result.size() >= 3, "조회 오류 발생");
     }
 
     @Test
@@ -76,8 +70,7 @@ public class SettingTest extends TestConfig {
         UserCommon common = new UserCommon(userRepository);
 
         // when
-        SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingFixtureName("del_setting").settingEntityBuild();
-        entity.setUserId(common.userId);
+        SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
 
         SettingEntity save = settingRepository.save(entity);
 
