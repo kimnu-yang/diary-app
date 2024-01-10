@@ -12,7 +12,4 @@ public interface SettingRepository extends JpaRepository<SettingEntity, Long> {
 
     // select * from setting where user_id = ?
     List<SettingEntity> findByUserId(Long userId);
-
-
-    Long countByUserIdAndName(Long userId, String name);
 }

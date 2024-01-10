@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.diary.db.setting.SettingEntity;
+import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -17,7 +17,9 @@ import java.util.List;
 public class SettingRegisterRequest {
 
     @Data
-    @Builder
+    @NoArgsConstructor
+    @AllArgsConstructor
+    @SuperBuilder
     public static class SettingObj {
         private String name;
         private String value;

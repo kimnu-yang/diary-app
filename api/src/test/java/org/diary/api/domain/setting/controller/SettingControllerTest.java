@@ -3,6 +3,7 @@ package org.diary.api.domain.setting.controller;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.jsonwebtoken.lang.Assert;
 import org.diary.api.common.UserCommon;
 import org.diary.api.common.config.TestMvcConfig;
 import org.diary.api.domain.setting.controller.model.SettingRegisterRequest;
@@ -34,14 +35,6 @@ public class SettingControllerTest extends TestMvcConfig {
 
     private static final String BASE_URL = "/api/setting";
 
-    // 설정 관련 동작
-    // 1. 설정 가져오기 (한번에)
-    // 2. 설정 저장 (한번에)
-    // 기본 키값: userId, name 값으로 구분
-    // 저장하는 경우 있으면 update 없는 경우 insert
-    // 탈퇴 처리는 설정 삭제하는 경우는 유저 DELETE 하는 경우
-
-
     void setUser() {
         UserCommon common = new UserCommon(userRepository, tokenBusiness);
         user = common.user;
@@ -50,7 +43,6 @@ public class SettingControllerTest extends TestMvcConfig {
 
     @Test
     void saveSettings() throws JsonProcessingException {
-        // 1. 설정 가져오기
         // 유저 생성
         setUser();
 
@@ -63,8 +55,7 @@ public class SettingControllerTest extends TestMvcConfig {
 
         // then
         JsonNode resultJson = objectMapper.readTree(result);
-//        Assert.notNull(resultJson.get("body").get("id"), "질문 조회 실패");
-        System.out.println(resultJson.get("body"));
+        Assert.state(resultJson.get("body").size() >= 3, "설정 저장 실패");
     }
 
     @Test
@@ -82,9 +73,7 @@ public class SettingControllerTest extends TestMvcConfig {
 
         // then
         JsonNode resultJson = objectMapper.readTree(result);
-//        Assert.notNull(resultJson.get("body").get("id"), "질문 조회 실패");
-        System.out.println(resultJson.get("body"));
+        Assert.state(resultJson.get("body").size() >= 3, "설정 조회 실패");
     }
-
 
 }

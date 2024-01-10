@@ -15,6 +15,8 @@ public class SettingEntityFixture {
     private final String value2 = "setting_value2";
     private String name3 = "setting_key3";
     private final String value3 = "setting_value3";
+    private String name4 = "setting_key3";
+    private final String value4 = "setting_update_value4";
 
     public static SettingEntityFixture anSettingFixture() {
         return new SettingEntityFixture();
@@ -53,6 +55,7 @@ public class SettingEntityFixture {
         settings.add(SettingRegisterRequest.SettingObj.builder().name(name).value(value).build());
         settings.add(SettingRegisterRequest.SettingObj.builder().name(name2).value(value2).build());
         settings.add(SettingRegisterRequest.SettingObj.builder().name(name3).value(value3).build());
+        settings.add(SettingRegisterRequest.SettingObj.builder().name(name4).value(value4).build());
 
         return SettingRegisterRequest.builder().userId(userId).settings(settings).build();
     }

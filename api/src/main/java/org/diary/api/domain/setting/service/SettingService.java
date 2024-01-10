@@ -1,11 +1,15 @@
 package org.diary.api.domain.setting.service;
 
 import lombok.RequiredArgsConstructor;
+import org.diary.api.common.error.ErrorCode;
+import org.diary.api.common.exception.ApiException;
 import org.diary.db.setting.SettingEntity;
 import org.diary.db.setting.SettingRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Setting 도메인 로직을 처리하는 서비스
@@ -18,19 +22,27 @@ public class SettingService {
 
     /**
      * 설정 등록 처리
+     * 해당 유저에게 동일한 설정이 있는 경우 업데이트 처리
      *
-     * @param userEntity - 카카오 ID만 있는 객체
-     * @return UserEntity
+     * @param settings - 설정 Entity 리스트
      */
-//    public UserEntity register(UserEntity userEntity) {
-//        return Optional.ofNullable(userEntity)
-//                .map(it -> {
-//                    userEntity.setStatus(UserStatus.REGISTERED);
-//                    userEntity.setRegisteredAt(LocalDateTime.now());
-//                    return userRepository.save(userEntity);
-//                })
-//                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "Kakao User Register Null"));
-//    }
+    @Transactional
+    public List<SettingEntity> setSettings(List<SettingEntity> settings) {
+        return Optional.ofNullable(settings)
+                .map(settingEntities -> {
+                    // 기존 설정값 체크
+                    for (int idx = 0; idx < settingEntities.size(); idx++) {
+                        SettingEntity entity = settingEntities.get(idx);
+                        Optional<SettingEntity> check = settingRepository.findFirstByUserIdAndName(entity.getUserId(), entity.getName());
+                        check.ifPresent(e -> entity.setId(e.getId()));
+
+                        settingRepository.save(entity);
+                    }
+
+                    return settingEntities;
+                })
+                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "setting data null"));
+    }
 
     /**
      * 설정 조회

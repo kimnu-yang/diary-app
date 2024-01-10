@@ -3,10 +3,7 @@ package org.diary.db.setting;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import org.diary.db.BaseEntity;
 
@@ -17,6 +14,7 @@ import org.diary.db.BaseEntity;
 @NoArgsConstructor
 @AllArgsConstructor
 @SuperBuilder
+@ToString(callSuper = true)
 public class SettingEntity extends BaseEntity {
 
     private Long userId;
