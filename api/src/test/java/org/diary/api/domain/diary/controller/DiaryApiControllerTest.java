@@ -66,7 +66,7 @@ public class DiaryApiControllerTest extends TestMvcConfig {
 
         // given(값 설정)
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness); // - User 정보
-        DiaryRegisterRequest diaryRegisterRequest = DiaryFixture.anUserFixture().diaryRegisterRequest(); // - 다이어리 작성 값
+        DiaryRegisterRequest diaryRegisterRequest = DiaryFixture.anDiaryFixture().diaryRegisterRequest(); // - 다이어리 작성 값
 
         // when(실행)
         String result = doPostWithToken(BASE_URL, diaryRegisterRequest, userCommon.token);
@@ -83,7 +83,7 @@ public class DiaryApiControllerTest extends TestMvcConfig {
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness);  // - 유저 생성
         DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.userId); // - 다이어리 생성
         Long diaryId = diaryCommon.diaryId; // - 다이어리 정보
-        DiaryUpdateRequest diaryUpdateRequest = DiaryFixture.anUserFixture().diaryUpdateRequest(); // - 수정될 데이터
+        DiaryUpdateRequest diaryUpdateRequest = DiaryFixture.anDiaryFixture().diaryUpdateRequest(); // - 수정될 데이터
 
         // when(실행)
         String diaryUpdateResult = doPatchWithToken(BASE_URL + "/" + diaryId, diaryUpdateRequest, userCommon.token);
@@ -130,7 +130,7 @@ public class DiaryApiControllerTest extends TestMvcConfig {
         UserCommon userCommon = new UserCommon(userRepository, tokenBusiness);  // - 유저 생성
         DiaryCommon diaryCommon = new DiaryCommon(diaryRepository, userCommon.userId); // - 다이어리 생성
 
-        BookmarkUpdateRequest bookmarkUpdateRequest = BookmarkFixture.anUserFixture().bookmarkUpdateRequest(userCommon.userId, diaryCommon.diaryId);
+        BookmarkUpdateRequest bookmarkUpdateRequest = BookmarkFixture.anBookmarkFixture().bookmarkUpdateRequest(userCommon.userId, diaryCommon.diaryId);
 
         // when(실행)
         String result = doPutWithToken(BASE_URL + "/bookmark", bookmarkUpdateRequest, userCommon.token);

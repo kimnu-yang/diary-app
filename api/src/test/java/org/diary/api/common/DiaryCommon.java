@@ -10,7 +10,7 @@ public class DiaryCommon {
 
     public Long diaryId;
 
-    DiaryRegisterRequest diaryRegisterRequest = DiaryFixture.anUserFixture().diaryRegisterRequest();
+    DiaryRegisterRequest diaryRegisterRequest = DiaryFixture.anDiaryFixture().diaryRegisterRequest();
 
     public DiaryCommon(DiaryRepository diaryRepository, Long userId) {
         diaryId = diaryRepository.save(DiaryEntity.builder()
