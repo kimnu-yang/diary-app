@@ -31,9 +31,6 @@ public class UserConverter {
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT, "UserRegisterRequest Null"));
     }
 
-    // 구글 컨버터
-    // public GoogleTokenEntity toGoogleEntity(GoogleRegisterRequest request) {}
-
     public UserResponse toResponse(UserEntity userEntity) {
 
         return Optional.ofNullable(userEntity)

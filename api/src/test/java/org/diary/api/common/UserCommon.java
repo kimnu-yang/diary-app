@@ -12,7 +12,7 @@ public class UserCommon {
     public String token;
 
     // 회원가입
-    UserEntity user = UserEntityFixture.anUserFixture().userKakaoEntityBuild();
+    public UserEntity user = UserEntityFixture.anUserFixture().userKakaoEntityBuild();
 
     public UserCommon(UserRepository userRepository, TokenBusiness tokenBusiness) {
         userId = userRepository.save(user).getId();
@@ -22,5 +22,11 @@ public class UserCommon {
                 .id(userId)
                 .status(UserStatus.REGISTERED)
                 .build()).getAccessToken();
+    }
+
+    public UserCommon(UserRepository userRepository) {
+        user = userRepository.save(user);
+
+        this.userId = user.getId();
     }
 }
