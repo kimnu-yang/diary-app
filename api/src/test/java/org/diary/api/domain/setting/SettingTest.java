@@ -30,14 +30,15 @@ public class SettingTest extends TestConfig {
 
         SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
 
-        // when
         // 이미 있는 경우 api 오류
         if (settingRepository.findFirstByUserIdAndName(entity.getUserId(), entity.getName()).isPresent()) {
             throw new ApiException(ErrorCode.BAD_REQUEST, "이미 있는 설정값입니다.");
         }
 
+        // when
         // 해당 유저로 세팅값 저장
         SettingEntity result = settingRepository.save(entity);
+
 
         // then
         Assert.notNull(result, "저장 오류 발생");
@@ -68,13 +69,10 @@ public class SettingTest extends TestConfig {
         // given
         // 유저 생성
         UserCommon common = new UserCommon(userRepository);
-
-        // when
         SettingEntity entity = SettingEntityFixture.anSettingFixture().settingFixtureUserId(common.userId).settingEntityBuild();
-
         SettingEntity save = settingRepository.save(entity);
 
-        // 해당 유저로 세팅값 저장
+        // when
         settingRepository.deleteById(save.getId());
 
         // then

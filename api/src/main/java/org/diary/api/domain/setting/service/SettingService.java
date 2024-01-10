@@ -31,8 +31,7 @@ public class SettingService {
         return Optional.ofNullable(settings)
                 .map(settingEntities -> {
                     // 기존 설정값 체크
-                    for (int idx = 0; idx < settingEntities.size(); idx++) {
-                        SettingEntity entity = settingEntities.get(idx);
+                    for (SettingEntity entity : settingEntities) {
                         Optional<SettingEntity> check = settingRepository.findFirstByUserIdAndName(entity.getUserId(), entity.getName());
                         check.ifPresent(e -> entity.setId(e.getId()));
 

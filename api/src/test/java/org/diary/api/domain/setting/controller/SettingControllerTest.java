@@ -43,12 +43,11 @@ public class SettingControllerTest extends TestMvcConfig {
 
     @Test
     void saveSettings() throws JsonProcessingException {
+        // given
         // 유저 생성
         setUser();
-
-        // given
         // userId, settingList
-        SettingRegisterRequest request = SettingEntityFixture.anSettingFixture().settingRegisterRequestBuild(user.getId());
+        List<SettingRegisterRequest> request = SettingEntityFixture.anSettingFixture().settingRegisterRequestBuild();
 
         // when
         String result = doPostWithToken(BASE_URL, request, token);
@@ -60,10 +59,9 @@ public class SettingControllerTest extends TestMvcConfig {
 
     @Test
     void getSettings() throws JsonProcessingException {
+        // given
         // 유저 생성
         setUser();
-
-        // given
         // userId, settingList
         List<SettingEntity> settings = SettingEntityFixture.anSettingFixture().settingFixtureUserId(user.getId()).settingsEntityBuild();
         settingRepository.saveAll(settings);

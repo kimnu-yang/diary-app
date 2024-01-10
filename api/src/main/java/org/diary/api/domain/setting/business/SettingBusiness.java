@@ -32,20 +32,21 @@ public class SettingBusiness {
         return Optional
                 .of(settingService.getSetting(userId))
                 .map(settingConverter::toResponse)
-                .orElse(new HashMap<String, String>());
+                .orElse(new HashMap<>());
     }
 
     /**
      * 한번에 모든 설정 저장
      *
-     * @param request - 저장할 설정 리스트
+     * @param userId         - 저장할 회원 번호
+     * @param settingRequest - 저장할 설정 리스트
      * @return SettingResponse
      */
     @Transactional
-    public List<SettingEntity> setSettings(SettingRegisterRequest request) {
+    public List<SettingEntity> setSettings(Long userId, List<SettingRegisterRequest> settingRequest) {
         return Optional
-                .of(request)
-                .map(settingConverter::toSettingEntitryList)
+                .of(settingRequest)
+                .map((settingReq) -> settingConverter.toSettingEntitryList(userId, settingReq))
                 .map(settingService::setSettings)
                 .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "설정 저장 오류"));
     }

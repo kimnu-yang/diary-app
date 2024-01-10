@@ -14,12 +14,12 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class SettingConverter {
 
-    public List<SettingEntity> toSettingEntitryList(SettingRegisterRequest request) {
+    public List<SettingEntity> toSettingEntitryList(Long userId, List<SettingRegisterRequest> request) {
         List<SettingEntity> entityList = new ArrayList<>();
         // to Entity List
-        for (SettingRegisterRequest.SettingObj settingReq : request.getSettings()) {
+        for (SettingRegisterRequest settingReq : request) {
             entityList.add(SettingEntity.builder()
-                    .userId(request.getUserId())
+                    .userId(userId)
                     .name(settingReq.getName())
                     .value(settingReq.getValue())
                     .build()

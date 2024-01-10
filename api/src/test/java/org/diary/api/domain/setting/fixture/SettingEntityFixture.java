@@ -41,6 +41,12 @@ public class SettingEntityFixture {
         );
     }
 
+    /**
+     * 설정값 3개 저장하기 위한 함수
+     * 직접 save 하기 때문에 userId 세팅 포함
+     *
+     * @return 설정값 목록
+     */
     public List<SettingEntity> settingsEntityBuild() {
         List<SettingEntity> settings = new ArrayList<>();
         settings.add(SettingEntity.builder().userId(userId).name(name).value(value).build());
@@ -49,15 +55,21 @@ public class SettingEntityFixture {
         return settings;
     }
 
-    public SettingRegisterRequest settingRegisterRequestBuild(Long userId) {
-        List<SettingRegisterRequest.SettingObj> settings = new ArrayList<>();
+    /**
+     * 설정값 3개 저장하기 위한 함수
+     * doPost 하기 위한 함수
+     *
+     * @return 설정값 목록
+     */
+    public List<SettingRegisterRequest> settingRegisterRequestBuild() {
+        List<SettingRegisterRequest> settings = new ArrayList<>();
 
-        settings.add(SettingRegisterRequest.SettingObj.builder().name(name).value(value).build());
-        settings.add(SettingRegisterRequest.SettingObj.builder().name(name2).value(value2).build());
-        settings.add(SettingRegisterRequest.SettingObj.builder().name(name3).value(value3).build());
-        settings.add(SettingRegisterRequest.SettingObj.builder().name(name4).value(value4).build());
+        settings.add(SettingRegisterRequest.builder().name(name).value(value).build());
+        settings.add(SettingRegisterRequest.builder().name(name2).value(value2).build());
+        settings.add(SettingRegisterRequest.builder().name(name3).value(value3).build());
+        settings.add(SettingRegisterRequest.builder().name(name4).value(value4).build());
 
-        return SettingRegisterRequest.builder().userId(userId).settings(settings).build();
+        return settings;
     }
 
 }
