@@ -12,7 +12,7 @@ public class DiaryFixture {
     private final String weather = "맑음";
     private final Emotion emotion = Emotion.Green;
 
-    public static DiaryFixture anUserFixture() {
+    public static DiaryFixture anDiaryFixture() {
         return new DiaryFixture();
     }
 
