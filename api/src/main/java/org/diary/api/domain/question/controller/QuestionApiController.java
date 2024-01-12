@@ -2,7 +2,7 @@ package org.diary.api.domain.question.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.diary.api.common.annotation.UserSession;
+import org.diary.api.common.annotation.TokenUser;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.question.business.QuestionBusiness;
 import org.diary.api.domain.question.controller.model.QuestionResponse;
@@ -28,7 +28,7 @@ public class QuestionApiController {
     @GetMapping("/")
     public Api<List<QuestionResponse>> questionList(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user
     ){
         return Api.OK(questionBusiness.questionList(user));

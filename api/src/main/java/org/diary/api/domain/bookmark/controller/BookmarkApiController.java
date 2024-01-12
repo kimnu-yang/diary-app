@@ -3,7 +3,7 @@ package org.diary.api.domain.bookmark.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.diary.api.common.annotation.UserSession;
+import org.diary.api.common.annotation.TokenUser;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.bookmark.business.BookmarkBusiness;
 import org.diary.api.domain.bookmark.controller.model.BookmarkResponse;
@@ -27,7 +27,7 @@ public class BookmarkApiController {
     @PostMapping("/")
     public Api<BookmarkResponse> register(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @Valid
             Long diaryId
@@ -46,7 +46,7 @@ public class BookmarkApiController {
     @PatchMapping("/")
     public Api<BookmarkResponse> update(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @Valid
             Long diaryId,
@@ -66,7 +66,7 @@ public class BookmarkApiController {
     @DeleteMapping("/")
     public Api<BookmarkResponse> delete(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @Valid
             Long diaryId

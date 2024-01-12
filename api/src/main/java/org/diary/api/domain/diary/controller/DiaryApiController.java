@@ -3,8 +3,7 @@ package org.diary.api.domain.diary.controller;
 import io.swagger.v3.oas.annotations.Parameter;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.apache.catalina.User;
-import org.diary.api.common.annotation.UserSession;
+import org.diary.api.common.annotation.TokenUser;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.diary.business.DiaryBusiness;
 import org.diary.api.domain.diary.controller.model.DiaryRegisterRequest;
@@ -31,7 +30,7 @@ public class DiaryApiController {
     @GetMapping("/")
     public Api<List<DiaryResponse>> diaryList(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user
     ){
         return Api.OK(diaryBusiness.diaryList(user));
@@ -47,7 +46,7 @@ public class DiaryApiController {
     @GetMapping("/{diaryId}")
     public Api<DiaryResponse> diaryDetail(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @PathVariable(value = "diaryId")
             Long diaryId
@@ -64,7 +63,7 @@ public class DiaryApiController {
     @PostMapping("/")
     public Api<DiaryResponse> register(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @Valid
             @RequestBody
@@ -83,7 +82,7 @@ public class DiaryApiController {
     @PatchMapping("/{diaryId}")
     public Api<DiaryResponse> update(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @PathVariable(value = "diaryId")
             Long diaryId,
@@ -103,7 +102,7 @@ public class DiaryApiController {
     @DeleteMapping("/{diaryId}")
     public Api<DiaryResponse> delete(
             @Parameter(hidden = true)
-            @UserSession
+            @TokenUser
             UserEntity user,
             @PathVariable(value = "diaryId")
             Long diaryId
