@@ -27,7 +27,7 @@ public class DiaryApiController {
      * @param user - 유저 세션 정보
      * @return Api<List<DiaryResponse>> - 일기 리스트
      */
-    @GetMapping("/")
+    @GetMapping("")
     public Api<List<DiaryResponse>> diaryList(
             @Parameter(hidden = true)
             @TokenUser
@@ -60,7 +60,7 @@ public class DiaryApiController {
      * @param request
      * @return Api<DiaryResponse>
      */
-    @PostMapping("/")
+    @PostMapping("")
     public Api<DiaryResponse> register(
             @Parameter(hidden = true)
             @TokenUser
@@ -79,7 +79,7 @@ public class DiaryApiController {
      * @param request - 수정할 일기 데이터
      * @return
      */
-    @PatchMapping("/{diaryId}")
+    @PutMapping("/{diaryId}")
     public Api<DiaryResponse> update(
             @Parameter(hidden = true)
             @TokenUser
