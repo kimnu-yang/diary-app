@@ -1,6 +1,6 @@
-package org.diary.api.domain.diary.fixture;
+package org.diary.api.domain.bookmark.fixture;
 
-import org.diary.api.domain.diary.controller.model.BookmarkUpdateRequest;
+import org.diary.api.domain.bookmark.controller.model.BookmarkUpdateRequest;
 
 public class BookmarkFixture {
 

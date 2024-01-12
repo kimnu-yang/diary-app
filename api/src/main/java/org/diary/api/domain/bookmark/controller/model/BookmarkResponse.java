@@ -1,21 +1,21 @@
-package org.diary.api.domain.diary.controller.model;
+package org.diary.api.domain.bookmark.controller.model;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookmarkUpdateRequest {
+@Builder
+public class BookmarkResponse {
 
-    @NotBlank
+    private Long id;
+
     private Long diaryId;
 
-    @NotBlank
     private Long userId;
 
-    @NotBlank
     private int position;
 }

@@ -1,7 +1,7 @@
 package org.diary.api.resolver;
 
 import lombok.RequiredArgsConstructor;
-import org.diary.api.common.annotation.UserSession;
+import org.diary.api.common.annotation.TokenUser;
 import org.diary.api.domain.user.service.UserService;
 import org.diary.db.user.UserEntity;
 import org.springframework.core.MethodParameter;
@@ -15,7 +15,7 @@ import org.springframework.web.method.support.ModelAndViewContainer;
 
 @Component
 @RequiredArgsConstructor
-public class UserSessionResolver implements HandlerMethodArgumentResolver {
+public class TokenUserResolver implements HandlerMethodArgumentResolver {
 
     private final UserService userService;
 
@@ -24,7 +24,7 @@ public class UserSessionResolver implements HandlerMethodArgumentResolver {
         // 지원하는 파라미터 체크, 어노테이션 체크
 
         // 1. 어노테이션이 있는지 체크
-        var annotation = parameter.hasParameterAnnotation(UserSession.class);
+        var annotation = parameter.hasParameterAnnotation(TokenUser.class);
 
         // 2. 파라미터 타입 체크
         var parameterType = parameter.getParameterType().equals(UserEntity.class);

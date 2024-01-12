@@ -14,5 +14,5 @@ public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
 
     // 특정한 상태인 특정 일기 출력
     // select * from diary where id = ? and status = ?
-    Optional<DiaryEntity> findFirstByIdAndStatus(Long id, DiaryStatus status);
+    Optional<DiaryEntity> findFirstByUserIdAndIdAndStatus(Long userId,Long id, DiaryStatus status);
 }

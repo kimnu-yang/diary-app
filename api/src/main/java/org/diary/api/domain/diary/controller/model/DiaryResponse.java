@@ -1,26 +1,35 @@
 package org.diary.api.domain.diary.controller.model;
 
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.diary.db.diary.enums.Emotion;
+import org.diary.db.user.enums.DiaryStatus;
+
+import java.time.LocalDateTime;
 
 @Data
-@NotBlank
+@NoArgsConstructor
 @AllArgsConstructor
-public class DiaryUpdateRequest {
+@Builder
+public class DiaryResponse {
 
-    @NotBlank
+    private Long id;
+
     private String title;
 
-    @NotBlank
     private String content;
 
     private String location;
 
     private String weather;
 
-    @NotBlank
     private Emotion emotion;
-}
 
+    private DiaryStatus status;
+
+    private LocalDateTime createdAt;
+
+    private LocalDateTime updatedAt;
+}

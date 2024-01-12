@@ -2,7 +2,7 @@ package org.diary.api.domain.user.controller;
 
 import io.swagger.v3.oas.annotations.Parameter;
 import lombok.RequiredArgsConstructor;
-import org.diary.api.common.annotation.UserSession;
+import org.diary.api.common.annotation.TokenUser;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.user.business.UserBusiness;
 import org.diary.api.domain.user.controller.model.UserResponse;
@@ -27,7 +27,7 @@ public class UserApiController {
     @GetMapping("/me")
     public Api<UserResponse> me(
             @Parameter(hidden = true)
-            @UserSession UserEntity user
+            @TokenUser UserEntity user
     ) {
 
         var response = userBusiness.me(user.getId());

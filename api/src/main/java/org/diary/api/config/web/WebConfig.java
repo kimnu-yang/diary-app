@@ -2,7 +2,7 @@ package org.diary.api.config.web;
 
 import lombok.RequiredArgsConstructor;
 import org.diary.api.interceptor.AuthorizationInterceptor;
-import org.diary.api.resolver.UserSessionResolver;
+import org.diary.api.resolver.TokenUserResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -15,7 +15,7 @@ import java.util.List;
 public class WebConfig implements WebMvcConfigurer {
 
     private final AuthorizationInterceptor authorizationInterceptor;
-    private final UserSessionResolver userSessionResolver;
+    private final TokenUserResolver tokenUserResolver;
 
     private List<String> OPEN_API = List.of(
             "/open-api/**"
@@ -43,6 +43,6 @@ public class WebConfig implements WebMvcConfigurer {
 
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        resolvers.add(userSessionResolver);
+        resolvers.add(tokenUserResolver);
     }
 }
