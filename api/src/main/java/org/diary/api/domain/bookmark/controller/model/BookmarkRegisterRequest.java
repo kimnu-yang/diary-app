@@ -8,7 +8,13 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BookmarkUpdateRequest {
+public class BookmarkRegisterRequest {
+
+    @NotBlank
+    private Long diaryId;
+
+    @NotBlank
+    private Long userId;
 
     @NotBlank
     private int position;
