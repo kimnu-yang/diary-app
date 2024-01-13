@@ -25,7 +25,7 @@ public class QuestionApiController {
      * @param user
      * @return
      */
-    @GetMapping("/")
+    @GetMapping("")
     public Api<List<QuestionResponse>> questionList(
             @Parameter(hidden = true)
             @TokenUser

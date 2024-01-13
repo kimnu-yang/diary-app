@@ -3,10 +3,11 @@ package org.diary.api.domain.diary.controller.model;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.diary.db.diary.enums.Emotion;
 
 @Data
-@NotBlank
+@NoArgsConstructor
 @AllArgsConstructor
 public class DiaryUpdateRequest {
 
