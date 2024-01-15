@@ -1,6 +1,8 @@
 package org.diary.api.domain.user.service;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import org.diary.api.common.api.kakao.KakaoApi;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.error.UserErrorCode;
 import org.diary.api.common.exception.ApiException;
@@ -39,20 +41,19 @@ public class UserService {
 
     /**
      * 카카오 로그인 함수
+     * 해당 토큰으로 가입한 유저가 있다면 login 처리
+     * 해당 토큰으로 가입한 유저가 없다면 register 처리
      *
-     * @param id          - 유저 ID
-     * @param kakaoUserId - 카카오 ID
+     * @param kakaoToken - 카카오 토큰
      * @return UserEntity
      */
-    public UserEntity kakaoLogin(
-            Long id,
-            Long kakaoUserId
-    ) {
-        return userRepository.findFirstByIdAndKakaoUserIdAndStatusOrderByIdDesc(
-                id,
+    public UserEntity kakaoLogin(String kakaoToken) {
+        Long kakaoUserId = KakaoApi.getUserId(kakaoToken);
+
+        return userRepository.findFirstByKakaoUserIdAndStatusOrderByIdDesc(
                 kakaoUserId,
                 UserStatus.REGISTERED
-        ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
+        ).orElse(register(UserEntity.builder().kakaoUserId(kakaoUserId).build()));
     }
 
     /**

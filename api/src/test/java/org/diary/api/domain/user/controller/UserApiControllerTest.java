@@ -1,18 +1,20 @@
 package org.diary.api.domain.user.controller;
 
 import org.diary.api.common.config.TestMvcConfig;
+import org.diary.api.domain.token.business.TokenBusiness;
 import org.diary.api.domain.token.controller.model.TokenResponse;
-import org.diary.api.domain.user.business.UserBusiness;
-import org.diary.api.domain.user.controller.model.UserKakaoLoginRequest;
-import org.diary.api.domain.user.controller.model.UserKakaoRegisterRequest;
 import org.diary.api.domain.user.fixture.UserEntityFixture;
+import org.diary.api.domain.user.service.UserService;
+import org.diary.db.user.UserEntity;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
 class UserApiControllerTest extends TestMvcConfig {
     @Autowired
-    UserBusiness userBusiness;
+    UserService userService;
+    @Autowired
+    TokenBusiness tokenBusiness;
 
     private static final String BASE_URL = "/api/user";
 
@@ -20,16 +22,15 @@ class UserApiControllerTest extends TestMvcConfig {
     void me() {
         // given
         // 유저 생성
-        UserKakaoRegisterRequest req = UserEntityFixture.anUserFixture().kakaoRegisterRequestBuild();
-        UserKakaoLoginRequest loginReq = UserEntityFixture.anUserFixture().kakaoLoginRequestBuild();
-        loginReq.setId(userBusiness.kakaoRegister(req).getId());
+        UserEntity user = UserEntityFixture.anUserFixture().userKakaoEntityBuild();
+        user = userService.register(user);
 
         // 토큰 가져오기
-        TokenResponse tokenResponse = userBusiness.kakaoLogin(loginReq);
+        TokenResponse token = tokenBusiness.issueToken(user);
 
         //when
         // 발급한 토큰으로 /api/user/me api 실행
-        String result = doGetWithToken(BASE_URL + "/me", "", tokenResponse.getAccessToken());
+        String result = doGetWithToken(BASE_URL + "/me", "", token.getAccessToken());
 
         // then
         System.out.println(result);

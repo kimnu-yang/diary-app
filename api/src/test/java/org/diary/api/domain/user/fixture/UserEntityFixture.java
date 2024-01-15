@@ -17,6 +17,8 @@ public class UserEntityFixture {
 
     private Long kakaoUserId = 134616161L;
 
+    private String kakaoToken = "kakaoToken";
+
     private Long googleUserId = 535135412123L;
 
     private LocalDateTime registeredAt = LocalDateTime.now();
@@ -28,7 +30,6 @@ public class UserEntityFixture {
     public static UserEntityFixture anUserFixture() {
         return new UserEntityFixture();
     }
-
 
     public UserEntityFixture userFixtureId(final Long id) {
         this.id = id;
@@ -44,7 +45,7 @@ public class UserEntityFixture {
     }
 
     public UserKakaoLoginRequest kakaoLoginRequestBuild() {
-        return UserKakaoLoginRequest.builder().id(id).kakaoUserId(kakaoUserId).build();
+        return UserKakaoLoginRequest.builder().kakaoToken(kakaoToken).build();
     }
 
     public UserKakaoRegisterRequest kakaoRegisterRequestBuild() {
