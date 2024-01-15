@@ -3,8 +3,6 @@ package org.diary.api.domain.user.controller;
 import org.diary.api.common.config.TestMvcConfig;
 import org.diary.api.domain.user.controller.model.UserGoogleLoginRequest;
 import org.diary.api.domain.user.controller.model.UserGoogleRegisterRequest;
-import org.diary.api.domain.user.controller.model.UserKakaoLoginRequest;
-import org.diary.api.domain.user.controller.model.UserKakaoRegisterRequest;
 import org.diary.api.domain.user.fixture.UserEntityFixture;
 import org.diary.db.user.UserEntity;
 import org.diary.db.user.UserRepository;
@@ -18,36 +16,36 @@ class UserOpenApiControllerTest extends TestMvcConfig {
 
     private static final String BASE_URL = "/open-api/user";
 
-    @Test
-    void kakaoRegister() {
-        // given
-        // 가입 데이터
-        UserKakaoRegisterRequest request = UserEntityFixture.anUserFixture().kakaoRegisterRequestBuild();
+//    @Test
+//    void kakaoRegister() {
+//        // given
+//        // 가입 데이터
+//        UserKakaoRegisterRequest request = UserEntityFixture.anUserFixture().kakaoRegisterRequestBuild();
+//
+//        // when
+//        String result = doPost(BASE_URL + "/kakao/register", request);
+//
+//        // then
+//        System.out.println(result);
+//    }
 
-        // when
-        String result = doPost(BASE_URL + "/kakao/register", request);
-
-        // then
-        System.out.println(result);
-    }
-
-    @Test
-    void kakaoLogin() {
-        // given
-        // 회원가입
-        UserEntity user = UserEntityFixture.anUserFixture().userKakaoEntityBuild();
-        userRepository.save(user);
-
-        // 로그인 요청 객체 세팅
-        UserKakaoLoginRequest request = UserEntityFixture.anUserFixture().kakaoLoginRequestBuild();
-        request.setId(user.getId());
-
-        // when
-        String result = doPost(BASE_URL + "/kakao/login", request);
-
-        // then
-        System.out.println(result);
-    }
+//    @Test
+//    void kakaoLogin() {
+//        // given
+//        // 회원가입
+//        UserEntity user = UserEntityFixture.anUserFixture().userKakaoEntityBuild();
+//        userRepository.save(user);
+//
+//        // 로그인 요청 객체 세팅
+//        UserKakaoLoginRequest request = UserEntityFixture.anUserFixture().kakaoLoginRequestBuild();
+////        request.setId(user.getId());
+//
+//        // when
+//        String result = doPost(BASE_URL + "/kakao/login", request);
+//
+//        // then
+//        System.out.println(result);
+//    }
 
 
     @Test

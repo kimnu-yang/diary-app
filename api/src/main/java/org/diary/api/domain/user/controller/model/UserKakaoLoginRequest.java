@@ -12,8 +12,5 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserKakaoLoginRequest {
     @NotBlank
-    private Long id;
-
-    @NotBlank
-    private Long kakaoUserId;
+    private String kakaoToken;
 }

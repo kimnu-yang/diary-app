@@ -45,7 +45,7 @@ public class UserBusiness {
      * @return TokenResponse
      */
     public TokenResponse kakaoLogin(UserKakaoLoginRequest request) {
-        var userEntity = userService.kakaoLogin(request.getId(), request.getKakaoUserId());
+        var userEntity = userService.kakaoLogin(request.getKakaoToken());
         return tokenBusiness.issueToken(userEntity);
     }
 
