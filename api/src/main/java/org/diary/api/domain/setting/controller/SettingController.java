@@ -29,7 +29,6 @@ public class SettingController {
      */
     @GetMapping
     public Api<Map<String, String>> getSetting(HttpServletRequest request) {
-        System.out.println(request.getAttribute("userId") + "=================");
         var response = settingBusiness.getSettings(Long.parseLong(request.getAttribute("userId").toString()));
         return Api.OK(response);
     }
