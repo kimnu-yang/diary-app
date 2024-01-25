@@ -36,7 +36,7 @@ public class KakaoApi {
                 throw new ApiException(ErrorCode.SERVER_ERROR, "사용자 카카오토큰 오류");
             }
 
-            throw new ApiException(ErrorCode.SERVER_ERROR, "카카오 통신 오류");
+            throw new ApiException(ErrorCode.SERVER_ERROR, "카카오 통신 오류 [" + e.getLocalizedMessage() + "]");
         }
 
         Optional<KakaoUserInfo> opt = Optional.ofNullable(response.getBody());
