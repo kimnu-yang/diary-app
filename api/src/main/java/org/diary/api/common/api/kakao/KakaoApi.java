@@ -1,5 +1,6 @@
 package org.diary.api.common.api.kakao;
 
+import lombok.extern.slf4j.Slf4j;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
 import org.springframework.http.*;
@@ -8,6 +9,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.util.Optional;
 
+@Slf4j
 public class KakaoApi {
 
     /**
@@ -36,6 +38,8 @@ public class KakaoApi {
                 throw new ApiException(ErrorCode.SERVER_ERROR, "사용자 카카오토큰 오류");
             }
 
+
+            log.error("카카오 통신 오류 [" + e.getLocalizedMessage() + "]");
             throw new ApiException(ErrorCode.SERVER_ERROR, "카카오 통신 오류");
         }
 
