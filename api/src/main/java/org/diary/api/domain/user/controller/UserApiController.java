@@ -7,6 +7,7 @@ import org.diary.api.common.api.Api;
 import org.diary.api.domain.user.business.UserBusiness;
 import org.diary.api.domain.user.controller.model.UserResponse;
 import org.diary.db.user.UserEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,5 +33,14 @@ public class UserApiController {
 
         var response = userBusiness.me(user.getId());
         return Api.OK(response);
+    }
+
+    @DeleteMapping
+    public Api unregistUser(
+            @Parameter(hidden = true)
+            @TokenUser UserEntity user
+    ) {
+        userBusiness.unregistUser(user.getId());
+        return Api.OK(null);
     }
 }

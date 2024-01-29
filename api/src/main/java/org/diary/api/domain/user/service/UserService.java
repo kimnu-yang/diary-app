@@ -1,6 +1,5 @@
 package org.diary.api.domain.user.service;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.diary.api.common.api.kakao.KakaoApi;
 import org.diary.api.common.error.ErrorCode;
@@ -10,6 +9,7 @@ import org.diary.db.user.UserEntity;
 import org.diary.db.user.UserRepository;
 import org.diary.db.user.enums.UserStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -53,7 +53,7 @@ public class UserService {
         return userRepository.findFirstByKakaoUserIdAndStatusOrderByIdDesc(
                 kakaoUserId,
                 UserStatus.REGISTERED
-        ).orElse(register(UserEntity.builder().kakaoUserId(kakaoUserId).build()));
+        ).orElseGet(() -> register(UserEntity.builder().kakaoUserId(kakaoUserId).build()));
     }
 
     /**
@@ -88,12 +88,12 @@ public class UserService {
         ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
     }
 
-    public Long getKakaoUser(String token) {
-        Long kakaoUserId = KakaoApi.getUserId(token);
+    @Transactional
+    public void unregistKakaoUser(Long userId) {
+        UserEntity user = getUserWithThrow(userId);
 
-        return userRepository.findFirstByKakaoUserIdAndStatusOrderByIdDesc(
-                kakaoUserId,
-                UserStatus.REGISTERED
-        ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND)).getId();
+        user.setKakaoUserId(null);
+        user.setStatus(UserStatus.UNREGISTERED);
+        user.setUnregisteredAt(LocalDateTime.now());
     }
 }
