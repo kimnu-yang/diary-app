@@ -8,6 +8,8 @@ import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.error.TokenErrorCode;
 import org.diary.api.common.exception.ApiException;
 import org.diary.api.domain.token.business.TokenBusiness;
+import org.diary.api.domain.user.business.UserBusiness;
+import org.diary.api.domain.user.service.UserService;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
@@ -23,6 +25,7 @@ import java.util.Objects;
 public class AuthorizationInterceptor implements HandlerInterceptor {
 
     private final TokenBusiness tokenBusiness;
+    private final UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -44,7 +47,8 @@ public class AuthorizationInterceptor implements HandlerInterceptor {
             throw new ApiException(TokenErrorCode.TOKEN_NOT_FOUND);
         }
 
-        var userId = tokenBusiness.validationAccessToken(accessToken);
+//        var userId = tokenBusiness.validationAccessToken(accessToken);
+        var userId = userService.getKakaoUser(accessToken);
 
         if (userId != null) {
             var requestContext = Objects.requireNonNull(RequestContextHolder.getRequestAttributes());

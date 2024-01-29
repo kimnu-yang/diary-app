@@ -87,4 +87,13 @@ public class UserService {
                 UserStatus.REGISTERED
         ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND));
     }
+
+    public Long getKakaoUser(String token) {
+        Long kakaoUserId = KakaoApi.getUserId(token);
+
+        return userRepository.findFirstByKakaoUserIdAndStatusOrderByIdDesc(
+                kakaoUserId,
+                UserStatus.REGISTERED
+        ).orElseThrow(() -> new ApiException(UserErrorCode.USER_NOT_FOUND)).getId();
+    }
 }
