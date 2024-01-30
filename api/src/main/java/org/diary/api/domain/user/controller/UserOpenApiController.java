@@ -4,14 +4,12 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.token.business.TokenBusiness;
-import org.diary.api.domain.token.controller.model.RefreshTokenRequest;
 import org.diary.api.domain.token.controller.model.TokenResponse;
 import org.diary.api.domain.user.business.UserBusiness;
 import org.diary.api.domain.user.controller.model.UserGoogleLoginRequest;
 import org.diary.api.domain.user.controller.model.UserGoogleRegisterRequest;
 import org.diary.api.domain.user.controller.model.UserKakaoLoginRequest;
 import org.diary.api.domain.user.controller.model.UserResponse;
-import org.diary.db.user.UserEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +46,7 @@ public class UserOpenApiController {
      * @return Api<TokenResponse>
      */
     @PostMapping("/kakao/login")
-    public Api<TokenResponse> login(
+    public Api<UserResponse> login(
             @Valid
             @RequestBody
             UserKakaoLoginRequest request

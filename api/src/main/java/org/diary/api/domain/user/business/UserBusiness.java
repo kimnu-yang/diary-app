@@ -44,9 +44,10 @@ public class UserBusiness {
      * @param request - 카카오 엑세스 토큰 정보
      * @return TokenResponse
      */
-    public TokenResponse kakaoLogin(UserKakaoLoginRequest request) {
-        var userEntity = userService.kakaoLogin(request.getKakaoToken());
-        return tokenBusiness.issueToken(userEntity);
+    public UserResponse kakaoLogin(UserKakaoLoginRequest request) {
+        return Optional.ofNullable(userService.kakaoLogin(request.getKakaoToken()))
+                .map(userConverter::toResponse)
+                .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "회원 로그인 처리 오류"));
     }
 
 
@@ -73,5 +74,9 @@ public class UserBusiness {
     public UserResponse me(Long userId) {
         var userEntity = userService.getUserWithThrow(userId);
         return userConverter.toResponse(userEntity);
+    }
+
+    public void unregistUser(Long userId) {
+        userService.unregistKakaoUser(userId);
     }
 }

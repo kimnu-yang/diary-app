@@ -1,6 +1,7 @@
 package org.diary.api.domain.token.service;
 
 import lombok.RequiredArgsConstructor;
+import org.diary.api.common.api.kakao.KakaoApi;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
 import org.diary.api.domain.token.ifs.TokenHelperIfs;
