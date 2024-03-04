@@ -53,10 +53,10 @@ public class SettingBusiness {
                 .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "설정 저장 오류"));
     }
 
-    public Map<String, Object> checkSyncData(Long userId, List<CheckSyncData> request) {
+    public Map<String, Object> checkSyncData(Long userId, CheckSyncData request) {
         return Optional
-                .of(request).map((req) -> settingConverter.toDiaryEntitryList(userId, req))
-                .map((req) -> settingService.checkSyncDate(userId, req))
+                .of(request.getCheckLists()).map((req) -> settingConverter.toDiaryEntitryList(userId, req))
+                .map((req) -> settingService.checkSyncDate(userId, request.getLastSyncTime(), req))
                 .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "동기화 오류"));
     }
 

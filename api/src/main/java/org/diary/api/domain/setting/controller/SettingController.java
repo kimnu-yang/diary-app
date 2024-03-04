@@ -55,7 +55,7 @@ public class SettingController {
 
 
     @PostMapping("/check")
-    public Api<Map<String, Object>> checkSyncData(HttpServletRequest request, @RequestBody List<CheckSyncData> data) {
+    public Api<Map<String, Object>> checkSyncData(HttpServletRequest request, @RequestBody CheckSyncData data) {
         Map<String, Object> response = settingBusiness.checkSyncData(Long.parseLong(request.getAttribute("userId").toString()), data);
         return Api.OK(response);
     }

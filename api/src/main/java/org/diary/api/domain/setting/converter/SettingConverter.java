@@ -2,6 +2,7 @@ package org.diary.api.domain.setting.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.Converter;
+import org.diary.api.domain.setting.controller.model.CheckList;
 import org.diary.api.domain.setting.controller.model.CheckSyncData;
 import org.diary.api.domain.setting.controller.model.DiaryWithColorAndTag;
 import org.diary.api.domain.setting.controller.model.SettingRegisterRequest;
@@ -32,10 +33,10 @@ public class SettingConverter {
         return entityList;
     }
 
-    public List<DiaryEntity> toDiaryEntitryList(Long userId, List<CheckSyncData> request) {
+    public List<DiaryEntity> toDiaryEntitryList(Long userId, List<CheckList> request) {
         List<DiaryEntity> entityList = new ArrayList<>();
         // to Entity List
-        for (CheckSyncData req : request) {
+        for (CheckList req : request) {
             entityList.add(DiaryEntity.builder()
                     .id(req.getId())
                     .userId(userId)

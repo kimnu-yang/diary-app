@@ -7,17 +7,20 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckSyncData {
+public class CheckList {
+    private Long id;
 
-    @JsonProperty("lastSyncTime")
-    private String lastSyncTime;
+    @JsonProperty("registeredAt")
+    private LocalDateTime registeredAt;
 
-    @JsonProperty("checkList")
-    private List<CheckList> checkLists;
+    @JsonProperty("updatedAt")
+    private LocalDateTime updatedAt;
+
+    @JsonProperty("deletedAt")
+    private LocalDateTime deletedAt;
 }

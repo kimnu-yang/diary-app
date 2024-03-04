@@ -11,6 +11,7 @@ import org.diary.db.setting.SettingRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -60,8 +61,18 @@ public class SettingService {
         return settingRepository.findByUserId(userId);
     }
 
-    public Map<String, Object> checkSyncDate(Long userId, List<DiaryEntity> checkData) {
-        List<DiaryEntity> savedData = diaryRepository.findByUserIdOrderById(userId);
+    public Map<String, Object> checkSyncDate(Long userId, String lastSyncTime, List<DiaryEntity> checkData) {
+        List<DiaryEntity> savedData;
+
+        if (!Objects.equals(lastSyncTime, "")) {
+            // 기준 일자 있는 경우
+            System.out.println("----------------");
+            System.out.println(LocalDateTime.parse(lastSyncTime));
+            savedData = diaryRepository.findByUserIdAndCheckLastSyncTimeOrderById(userId, LocalDateTime.parse(lastSyncTime));
+        } else {
+            // 기준 일자 없는 경우 전체 데이터
+            savedData = diaryRepository.findByUserIdOrderById(userId);
+        }
 
         List<DiaryWithColorAndTag> downloadList = new ArrayList<>();
         List<Long> uploadList = new ArrayList<>();
