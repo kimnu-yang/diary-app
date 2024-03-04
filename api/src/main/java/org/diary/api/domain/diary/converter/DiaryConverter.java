@@ -24,10 +24,10 @@ public class DiaryConverter {
                                 .userId(user.getId())
                                 .title(request.getTitle())
                                 .content(request.getContent())
-                                .location(request.getLocation())
-                                .weather(request.getWeather())
-                                .emotion(request.getEmotion())
-                                .createAt(LocalDateTime.now())
+//                                .location(request.getLocation())
+//                                .weather(request.getWeather())
+//                                .emotion(request.getEmotion())
+//                                .createAt(LocalDateTime.now())
                                 .build();
                     })
                     .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
@@ -40,11 +40,11 @@ public class DiaryConverter {
                             .id(diaryEntity.getId())
                             .title(diaryEntity.getTitle())
                             .content(diaryEntity.getContent())
-                            .weather(diaryEntity.getWeather())
-                            .emotion(diaryEntity.getEmotion())
-                            .location(diaryEntity.getLocation())
-                            .status(diaryEntity.getStatus())
-                            .createdAt(diaryEntity.getCreateAt())
+//                            .weather(diaryEntity.getWeather())
+//                            .emotion(diaryEntity.getEmotion())
+//                            .location(diaryEntity.getLocation())
+//                            .status(diaryEntity.getStatus())
+//                            .createdAt(diaryEntity.getCreateAt())
                             .updatedAt(diaryEntity.getUpdatedAt())
                             .build();
                 })
@@ -55,9 +55,9 @@ public class DiaryConverter {
 
         if (request != null && request.getTitle() != null) entity.setTitle(request.getTitle());
         if (request != null && request.getContent() != null) entity.setContent(request.getContent());
-        if (request != null && request.getLocation() != null) entity.setLocation(request.getLocation());
-        if (request != null && request.getWeather() != null) entity.setWeather(request.getWeather());
-        if (request != null && request.getEmotion() != null) entity.setEmotion(request.getEmotion());
+//        if (request != null && request.getLocation() != null) entity.setLocation(request.getLocation());
+//        if (request != null && request.getWeather() != null) entity.setWeather(request.getWeather());
+//        if (request != null && request.getEmotion() != null) entity.setEmotion(request.getEmotion());
 
         return entity;
     }

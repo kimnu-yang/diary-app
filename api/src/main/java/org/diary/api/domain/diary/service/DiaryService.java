@@ -27,7 +27,8 @@ public class DiaryService {
     public List<DiaryEntity> getDiaryList(
             Long userId
     ){
-        return diaryRepository.findAllByUserIdAndStatusOrderByIdDesc(userId,DiaryStatus.Registered);
+//        return diaryRepository.findAllByUserIdAndStatusOrderByIdDesc(userId,DiaryStatus.Registered);
+        return null;
     }
 
     /**
@@ -40,8 +41,9 @@ public class DiaryService {
             UserEntity user,
             Long diaryId
     ){
-        return diaryRepository.findFirstByUserIdAndIdAndStatus(user.getId(), diaryId, DiaryStatus.Registered)
-                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+//        return diaryRepository.findFirstByUserIdAndIdAndStatus(user.getId(), diaryId, DiaryStatus.Registered)
+//                .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));
+        return null;
     }
 
     /**
@@ -53,8 +55,8 @@ public class DiaryService {
     public DiaryEntity register(DiaryEntity diaryEntity) {
         return Optional.ofNullable(diaryEntity)
                 .map(it -> {
-                    diaryEntity.setStatus(DiaryStatus.Registered);
-                    diaryEntity.setCreateAt(LocalDateTime.now());
+//                    diaryEntity.setStatus(DiaryStatus.Registered);
+//                    diaryEntity.setCreateAt(LocalDateTime.now());
                     return diaryRepository.save(diaryEntity);
                 })
                 .orElseThrow(()-> new ApiException(ErrorCode.NULL_POINT));
@@ -85,7 +87,7 @@ public class DiaryService {
         return Optional.ofNullable(diaryEntity)
                 .map(it -> {
                     diaryEntity.setDeletedAt(LocalDateTime.now());
-                    diaryEntity.setStatus(DiaryStatus.Deleted);
+//                    diaryEntity.setStatus(DiaryStatus.Deleted);
                     return diaryRepository.save(diaryEntity);
                 })
                 .orElseThrow(() -> new ApiException(ErrorCode.NULL_POINT));

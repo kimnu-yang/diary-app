@@ -1,5 +1,6 @@
 package org.diary.db.diary;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +8,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import org.diary.db.BaseEntity;
-import org.diary.db.diary.enums.Emotion;
-import org.diary.db.user.enums.DiaryStatus;
+import org.diary.db.diary.enums.Weather;
 
 import java.time.LocalDateTime;
 
@@ -30,23 +30,24 @@ public class DiaryEntity extends BaseEntity {
     @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
-    @Column(length = 100, nullable = false)
-    private String location;
-
-    @Column(length = 100, nullable = false)
-    private String weather;
-
-    @Column(length = 10, nullable = false)
     @Enumerated(EnumType.STRING)
-    private Emotion emotion;
+    private Weather weather;
 
-    @Column(length = 15, nullable = false)
-    @Enumerated(EnumType.STRING)
-    private DiaryStatus status;
+    @JsonProperty("tempNow")
+    private String tempNow;
 
-    private LocalDateTime createAt;
+    @JsonProperty("tempMin")
+    private String tempMin;
 
+    @JsonProperty("tempMax")
+    private String tempMax;
+
+    @JsonProperty("registeredAt")
+    private LocalDateTime registeredAt;
+
+    @JsonProperty("updatedAt")
     private LocalDateTime updatedAt;
 
+    @JsonProperty("deletedAt")
     private LocalDateTime deletedAt;
 }
