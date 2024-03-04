@@ -27,6 +27,9 @@ dependencies {
 
     //mysql
     runtimeOnly 'com.mysql:mysql-connector-j'
+
+    // 컨트롤러에서 json과 객체를 매핑시키기 위한 디펜던시
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.5'
 }
 
 test {
