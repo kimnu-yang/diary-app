@@ -126,6 +126,9 @@ public class SettingService {
                 // DB 저장 처리
                 if (checkMap.get(date).getDeletedAt() == null) {
                     isUpload = true;
+                } else {
+                    // 삭제 날짜가 있는 경우 해당 날짜 일기 삭제 처리
+                    isDelete = true;
                 }
             } else if (!checkMap.containsKey(date) && savedMap.containsKey(date)) {
                 // DB에만 있는 데이터인 경우
@@ -171,9 +174,13 @@ public class SettingService {
 
             // 삭제 처리
             if (isDelete) {
-                diaryRepository.delete(savedMap.get(date));
-                diaryColorRepository.deleteAll(diaryColorRepository.findByUserIdAndDiaryId(userId, savedMap.get(date).getId()));
-                diaryTagRepository.deleteAll(diaryTagRepository.findByUserIdAndDiaryId(userId, savedMap.get(date).getId()));
+                DiaryEntity checkEntity = diaryRepository.findByUserIdAndRegisteredAtStartsWith(userId, date);
+
+                if (checkEntity != null) {
+                    diaryRepository.delete(checkEntity);
+                    diaryColorRepository.deleteAll(diaryColorRepository.findByUserIdAndDiaryId(userId, checkEntity.getId()));
+                    diaryTagRepository.deleteAll(diaryTagRepository.findByUserIdAndDiaryId(userId, checkEntity.getId()));
+                }
             }
 
             System.out.println("[동기화 " + date + "] isUpload: " + isUpload + " isDownload: " + isDownload + " isDelete: " + isDelete);
