@@ -66,8 +66,6 @@ public class SettingService {
 
         if (!Objects.equals(lastSyncTime, "")) {
             // 기준 일자 있는 경우
-            System.out.println("----------------");
-            System.out.println(LocalDateTime.parse(lastSyncTime));
             savedData = diaryRepository.findByUserIdAndCheckLastSyncTimeOrderById(userId, LocalDateTime.parse(lastSyncTime));
         } else {
             // 기준 일자 없는 경우 전체 데이터
