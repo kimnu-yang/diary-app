@@ -2,11 +2,7 @@ package org.diary.api.domain.setting.converter;
 
 import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.Converter;
-import org.diary.api.domain.setting.controller.model.CheckList;
-import org.diary.api.domain.setting.controller.model.CheckSyncData;
-import org.diary.api.domain.setting.controller.model.DiaryWithColorAndTag;
 import org.diary.api.domain.setting.controller.model.SettingRegisterRequest;
-import org.diary.db.diary.DiaryEntity;
 import org.diary.db.setting.SettingEntity;
 
 import java.util.ArrayList;
@@ -28,22 +24,6 @@ public class SettingConverter {
                     .value(settingReq.getValue())
                     .build()
             );
-        }
-
-        return entityList;
-    }
-
-    public List<DiaryEntity> toDiaryEntitryList(Long userId, List<CheckList> request) {
-        List<DiaryEntity> entityList = new ArrayList<>();
-        // to Entity List
-        for (CheckList req : request) {
-            entityList.add(DiaryEntity.builder()
-                    .id(req.getId())
-                    .userId(userId)
-                    .registeredAt(req.getRegisteredAt())
-                    .updatedAt(req.getUpdatedAt())
-                    .deletedAt(req.getDeletedAt())
-                    .build());
         }
 
         return entityList;

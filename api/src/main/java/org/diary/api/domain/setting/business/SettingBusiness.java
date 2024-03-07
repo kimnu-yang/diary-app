@@ -55,7 +55,7 @@ public class SettingBusiness {
 
     public Map<String, Object> checkSyncData(Long userId, CheckSyncData request) {
         return Optional
-                .of(request.getCheckLists()).map((req) -> settingConverter.toDiaryEntitryList(userId, req))
+                .of(request)
                 .map((req) -> settingService.checkSyncDate(userId, request.getLastSyncTime(), req))
                 .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "동기화 오류"));
     }

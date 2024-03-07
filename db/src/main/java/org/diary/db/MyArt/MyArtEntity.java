@@ -25,6 +25,7 @@ public class MyArtEntity extends BaseEntity {
     @Column(nullable = false)
     private Long userId;
 
+    @JsonProperty("artId")
     private Long artId;
 
     @JsonProperty("baseDate")

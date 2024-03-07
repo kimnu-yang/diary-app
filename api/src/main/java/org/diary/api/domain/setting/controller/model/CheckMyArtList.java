@@ -6,20 +6,22 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CheckSyncData {
+public class CheckMyArtList {
 
-    @JsonProperty("lastSyncTime")
-    private String lastSyncTime;
+    private Long id;
 
-    @JsonProperty("checkList")
-    private List<CheckList> checkLists;
+    @JsonProperty("artId")
+    private Long artId;
 
-    @JsonProperty("checkArtList")
-    private List<CheckMyArtList> checkArtList;
+    @JsonProperty("baseDate")
+    private LocalDateTime baseDate;
+
+    @JsonProperty("registeredAt")
+    private LocalDateTime registeredAt;
 }

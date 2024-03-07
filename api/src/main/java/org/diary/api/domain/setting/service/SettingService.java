@@ -4,7 +4,12 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
+import org.diary.api.domain.setting.controller.model.CheckList;
+import org.diary.api.domain.setting.controller.model.CheckMyArtList;
+import org.diary.api.domain.setting.controller.model.CheckSyncData;
 import org.diary.api.domain.setting.controller.model.DiaryWithColorAndTag;
+import org.diary.db.MyArt.MyArtEntity;
+import org.diary.db.MyArt.MyArtRepository;
 import org.diary.db.diary.*;
 import org.diary.db.setting.SettingEntity;
 import org.diary.db.setting.SettingRepository;
@@ -27,6 +32,7 @@ public class SettingService {
     private final DiaryRepository diaryRepository;
     private final DiaryColorRepository diaryColorRepository;
     private final DiaryTagRepository diaryTagRepository;
+    private final MyArtRepository myArtRepository;
 
     /**
      * 설정 등록 처리
@@ -61,27 +67,38 @@ public class SettingService {
         return settingRepository.findByUserId(userId);
     }
 
-    public Map<String, Object> checkSyncDate(Long userId, String lastSyncTime, List<DiaryEntity> checkData) {
+    public Map<String, Object> checkSyncDate(Long userId, String lastSyncTime, CheckSyncData checkData) {
         List<DiaryEntity> savedData;
+        List<MyArtEntity> artSavedData;
 
         if (!Objects.equals(lastSyncTime, "")) {
             // 기준 일자 있는 경우
             savedData = diaryRepository.findByUserIdAndCheckLastSyncTimeOrderById(userId, LocalDateTime.parse(lastSyncTime));
+            artSavedData = myArtRepository.findByUserIdAndCheckLastSyncTimeOrderById(userId, LocalDateTime.parse(lastSyncTime));
         } else {
             // 기준 일자 없는 경우 전체 데이터
             savedData = diaryRepository.findByUserIdOrderById(userId);
+            artSavedData = myArtRepository.findByUserIdOrderById(userId);
         }
 
         List<DiaryWithColorAndTag> downloadList = new ArrayList<>();
+        List<MyArtEntity> myArtDownloadList = new ArrayList<>();
         List<Long> uploadList = new ArrayList<>();
 
-        Map<String, Object> dateMap = new HashMap<>();
         Map<String, Object> resultMap = new HashMap<>();
-        Map<String, DiaryEntity> checkMap = new HashMap<>();
+
+        Map<String, Object> dateMap = new HashMap<>();
+        Map<String, CheckList> checkMap = new HashMap<>();
         Map<String, DiaryEntity> savedMap = new HashMap<>();
 
-        /////
-        for (DiaryEntity data : checkData) {
+
+        Map<String, Object> artDateMap = new HashMap<>();
+        Map<String, CheckMyArtList> artCheckMap = new HashMap<>();
+        Map<String, MyArtEntity> artSavedMap = new HashMap<>();
+
+        ///// 데이터 가공
+        // diary 데이터 세팅
+        for (CheckList data : checkData.getCheckLists()) {
             checkMap.put(data.getRegisteredAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), data);
             dateMap.put(data.getRegisteredAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), null);
         }
@@ -89,6 +106,18 @@ public class SettingService {
             savedMap.put(data.getRegisteredAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), data);
             dateMap.put(data.getRegisteredAt().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), null);
         }
+
+        // my_art 데이터 세팅
+        for (CheckMyArtList data : checkData.getCheckArtList()) {
+            artCheckMap.put(data.getBaseDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), data);
+            artDateMap.put(data.getBaseDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), null);
+        }
+        for (MyArtEntity data : artSavedData) {
+            artSavedMap.put(data.getBaseDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), data);
+            artDateMap.put(data.getBaseDate().format(DateTimeFormatter.ofPattern("yyyy-MM-dd")), null);
+        }
+
+        ////
 
         dateMap.forEach((date, value) -> {
             boolean isDownload = false;
@@ -186,8 +215,61 @@ public class SettingService {
             System.out.println("[동기화 " + date + "] isUpload: " + isUpload + " isDownload: " + isDownload + " isDelete: " + isDelete);
         });
 
+        // my_art db 비교
+        artDateMap.forEach((date, value) -> {
+            boolean isDownload = false;
+            boolean isSave = false;
+
+            if (artCheckMap.containsKey(date) && artSavedMap.containsKey(date)) {
+                // 앱, DB 둘 다 있는 경우
+                if (artCheckMap.get(date).getRegisteredAt().isBefore(artSavedMap.get(date).getRegisteredAt())) {
+                    // DB가 최신 데이터인 경우
+                    isDownload = true;
+                } else if (artSavedMap.get(date).getRegisteredAt().isBefore(artCheckMap.get(date).getRegisteredAt())) {
+                    // 앱이 최신 데이터인 경우
+                    isSave = true;
+                } // else 같은 경우는 이미 동기화가 되어있다고 판단
+            } else if (artCheckMap.containsKey(date) && !artSavedMap.containsKey(date)) {
+                // 앱에만 있는 데이터인 경우 (삭제된 날짜 비어있는 경우에만)
+                // DB 저장 처리
+                isSave = true;
+            } else if (!artCheckMap.containsKey(date) && artSavedMap.containsKey(date)) {
+                // DB에만 있는 데이터인 경우
+                isDownload = true;
+            } else {
+                // 둘 다 없는 경우??
+                // 없을거라고 생각됨
+                System.out.println("[동기화 오류]\r\nresultMap: " + resultMap + "\r\nartCheckMap: " + artCheckMap + "\r\nartSavedMap: " + artSavedMap);
+                log.error("[동기화 오류]\r\nresultMap: " + resultMap + "\r\nartCheckMap: " + artCheckMap + "\r\nartSavedMap: " + artSavedMap);
+            }
+
+            if (isSave) {
+                // DB 저장 처리
+                MyArtEntity myArtEntity = MyArtEntity.builder()
+                        .id(myArtRepository.findIdByUserIdAndBaseDateStartsWith(userId, date))
+                        .userId(userId)
+                        .artId(artCheckMap.get(date).getArtId())
+                        .registeredAt(artCheckMap.get(date).getRegisteredAt())
+                        .baseDate(artCheckMap.get(date).getBaseDate())
+                        .build();
+
+                myArtRepository.save(myArtEntity);
+            }
+
+            // 다운로드 처리
+            if (isDownload) {
+                artSavedMap.get(date).setId(null);
+                artSavedMap.get(date).setUserId(null);
+                myArtDownloadList.add(artSavedMap.get(date));
+            }
+
+            System.out.println("[동기화 " + date + "] isSave: " + isSave + " isDownload: " + isDownload);
+        });
+
         resultMap.put("downloadList", downloadList);
         resultMap.put("uploadList", uploadList);
+
+        resultMap.put("myArtDownloadList", myArtDownloadList);
 
         return resultMap;
     }
