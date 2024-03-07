@@ -5,6 +5,10 @@ import org.diary.api.common.api.kakao.KakaoApi;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.error.UserErrorCode;
 import org.diary.api.common.exception.ApiException;
+import org.diary.db.MyArt.MyArtRepository;
+import org.diary.db.diary.DiaryColorRepository;
+import org.diary.db.diary.DiaryRepository;
+import org.diary.db.diary.DiaryTagRepository;
 import org.diary.db.user.UserEntity;
 import org.diary.db.user.UserRepository;
 import org.diary.db.user.enums.UserStatus;
@@ -22,6 +26,11 @@ import java.util.Optional;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final DiaryRepository diaryRepository;
+    private final DiaryTagRepository diaryTagRepository;
+    private final DiaryColorRepository diaryColorRepository;
+    private final MyArtRepository myArtRepository;
+
 
     /**
      * 카카오 회원가입 처리
@@ -95,5 +104,11 @@ public class UserService {
         user.setKakaoUserId(null);
         user.setStatus(UserStatus.UNREGISTERED);
         user.setUnregisteredAt(LocalDateTime.now());
+
+        diaryRepository.deleteAllByUserId(userId);
+        diaryTagRepository.deleteAllByUserId(userId);
+        diaryColorRepository.deleteAllByUserId(userId);
+
+        myArtRepository.deleteAllByUserId(userId);
     }
 }

@@ -8,4 +8,6 @@ public interface DiaryColorRepository extends JpaRepository<DiaryColorEntity, Lo
     List<DiaryColorEntity> findByUserIdAndDiaryId(Long userId, Long diaryId);
 
     void deleteByUserIdAndDiaryId(Long userId, Long diaryId);
+
+    void deleteAllByUserId(Long userId);
 }

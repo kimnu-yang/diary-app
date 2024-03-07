@@ -19,4 +19,6 @@ public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
 
     @Query(value = "SELECT * FROM diary WHERE user_id = :userId AND registered_at LIKE :registeredAt%", nativeQuery = true)
     DiaryEntity findByUserIdAndRegisteredAtStartsWith(Long userId, String registeredAt);
+
+    void deleteAllByUserId(Long userId);
 }

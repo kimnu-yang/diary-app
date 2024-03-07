@@ -8,4 +8,6 @@ public interface DiaryTagRepository extends JpaRepository<DiaryTagEntity, Long> 
     List<DiaryTagEntity> findByUserIdAndDiaryId(Long userId, Long diaryId);
 
     void deleteByUserIdAndDiaryId(Long userId, Long diaryId);
+
+    void deleteAllByUserId(Long userId);
 }
