@@ -4,6 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.diary.api.common.annotation.Business;
 import org.diary.api.common.error.ErrorCode;
 import org.diary.api.common.exception.ApiException;
+import org.diary.api.domain.setting.controller.model.CheckSyncData;
+import org.diary.api.domain.setting.controller.model.DiaryWithColorAndTag;
 import org.diary.api.domain.setting.controller.model.SettingRegisterRequest;
 import org.diary.api.domain.setting.converter.SettingConverter;
 import org.diary.api.domain.setting.service.SettingService;
@@ -49,5 +51,16 @@ public class SettingBusiness {
                 .map((settingReq) -> settingConverter.toSettingEntitryList(userId, settingReq))
                 .map(settingService::setSettings)
                 .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "설정 저장 오류"));
+    }
+
+    public Map<String, Object> checkSyncData(Long userId, CheckSyncData request) {
+        return Optional
+                .of(request)
+                .map((req) -> settingService.checkSyncDate(userId, request.getLastSyncTime(), req))
+                .orElseThrow(() -> new ApiException(ErrorCode.SERVER_ERROR, "동기화 오류"));
+    }
+
+    public void uploadDiaryData(Long userId, List<DiaryWithColorAndTag> request) {
+        settingService.saveDiaryWithColorAndTag(userId, request);
     }
 }

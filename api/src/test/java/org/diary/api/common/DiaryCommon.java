@@ -17,10 +17,10 @@ public class DiaryCommon {
                 .userId(userId)
                 .title(diaryRegisterRequest.getTitle())
                 .content(diaryRegisterRequest.getContent())
-                .location(diaryRegisterRequest.getLocation())
-                .weather(diaryRegisterRequest.getWeather())
-                .emotion(diaryRegisterRequest.getEmotion())
-                .status(DiaryStatus.Registered)
+//                .location(diaryRegisterRequest.getLocation())
+//                .weather(diaryRegisterRequest.getWeather())
+//                .emotion(diaryRegisterRequest.getEmotion())
+//                .status(DiaryStatus.Registered)
                 .build()
         ).getId();
     }

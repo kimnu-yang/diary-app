@@ -35,10 +35,10 @@ public class KakaoApi {
             response = restTemplate.postForEntity(url, requestMessage, KakaoUserInfo.class);
         } catch (HttpClientErrorException e) {
             if (e.getStatusCode() == HttpStatus.UNAUTHORIZED) {
-                throw new ApiException(ErrorCode.SERVER_ERROR, "사용자 카카오토큰 오류");
+                log.error("사용자 카카오토큰 UNAUTHORIZED 오류 [" + e.getLocalizedMessage() + " [" + token + "]");
+                throw new ApiException(ErrorCode.SERVER_ERROR, "사용자 카카오토큰 UNAUTHORIZED 오류");
             }
-
-
+            
             log.error("카카오 통신 오류 [" + e.getLocalizedMessage() + "]");
             throw new ApiException(ErrorCode.SERVER_ERROR, "카카오 통신 오류");
         }

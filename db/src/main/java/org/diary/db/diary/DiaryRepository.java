@@ -1,18 +1,22 @@
 package org.diary.db.diary;
 
-import org.diary.db.user.enums.DiaryStatus;
+import org.diary.db.user.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
+import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 
 public interface DiaryRepository extends JpaRepository<DiaryEntity, Long> {
 
-    // 사용가 작성한 모든 일기
-    // select * from diary where user_id = ? and status = ? order by id desc
-    List<DiaryEntity> findAllByUserIdAndStatusOrderByIdDesc(Long id, DiaryStatus status);
+    List<DiaryEntity> findByUserIdOrderById(Long userId);
 
-    // 특정한 상태인 특정 일기 출력
-    // select * from diary where id = ? and status = ?
-    Optional<DiaryEntity> findFirstByUserIdAndIdAndStatus(Long userId,Long id, DiaryStatus status);
+    @Query(value = "SELECT * FROM diary WHERE user_id = :userId AND (registered_at >= :lastSyncTime OR updated_at >= :lastSyncTime OR deleted_at >= :lastSyncTime) ORDER BY id DESC", nativeQuery = true)
+    List<DiaryEntity> findByUserIdAndCheckLastSyncTimeOrderById(Long userId, LocalDateTime lastSyncTime);
+
+    @Query(value = "SELECT id FROM diary WHERE user_id = :userId AND registered_at LIKE :registeredAt%", nativeQuery = true)
+    Long findIdByUserIdAndRegisteredAtStartsWith(Long userId, String registeredAt);
+
+    @Query(value = "SELECT * FROM diary WHERE user_id = :userId AND registered_at LIKE :registeredAt%", nativeQuery = true)
+    DiaryEntity findByUserIdAndRegisteredAtStartsWith(Long userId, String registeredAt);
 }

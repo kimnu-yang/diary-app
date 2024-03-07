@@ -4,6 +4,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.diary.api.common.api.Api;
 import org.diary.api.domain.setting.business.SettingBusiness;
+import org.diary.api.domain.setting.controller.model.CheckSyncData;
+import org.diary.api.domain.setting.controller.model.DiaryWithColorAndTag;
 import org.diary.api.domain.setting.controller.model.SettingRegisterRequest;
 import org.diary.db.setting.SettingEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,5 +51,18 @@ public class SettingController {
     ) {
         var response = settingBusiness.setSettings(Long.parseLong(request.getAttribute("userId").toString()), settingRequest);
         return Api.OK(response);
+    }
+
+
+    @PostMapping("/check")
+    public Api<Map<String, Object>> checkSyncData(HttpServletRequest request, @RequestBody CheckSyncData data) {
+        Map<String, Object> response = settingBusiness.checkSyncData(Long.parseLong(request.getAttribute("userId").toString()), data);
+        return Api.OK(response);
+    }
+
+    @PostMapping("/upload")
+    public Api uploadData(HttpServletRequest request, @RequestBody List<DiaryWithColorAndTag> data) {
+        settingBusiness.uploadDiaryData(Long.parseLong(request.getAttribute("userId").toString()), data);
+        return Api.OK(null);
     }
 }
