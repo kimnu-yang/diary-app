@@ -15,4 +15,6 @@ public interface MyArtRepository extends JpaRepository<MyArtEntity, Long> {
 
     @Query(value = "SELECT id FROM my_art WHERE user_id = :userId AND base_date LIKE :baseDate%", nativeQuery = true)
     Long findIdByUserIdAndBaseDateStartsWith(Long userId, String baseDate);
+
+    void deleteAllByUserId(Long userId);
 }
