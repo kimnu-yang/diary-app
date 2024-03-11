@@ -14,7 +14,7 @@ services:
       - "3306:3306"
     environment:
       - MYSQL_DATABASE=diary
-      - MYSQL_ROOT_PASSWORD=root123!
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - TZ=Asia/Seoul
     healthcheck:
       test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
