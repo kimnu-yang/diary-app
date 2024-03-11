@@ -28,6 +28,8 @@ services:
   application:
     container_name: api-server
     restart: always
+    environment:
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
     build:
       context: ./
       dockerfile: Dockerfile
