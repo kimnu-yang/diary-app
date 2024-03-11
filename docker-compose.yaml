@@ -1,0 +1,43 @@
+version: "1"
+services:
+  mysql:
+    image: mysql:8.0.26
+    cap_add:
+      - SYS_NICE
+    restart: always
+    command:
+      - --lower_case_table_names=1
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+    container_name: diary-db
+    ports:
+      - "3306:3306"
+    environment:
+      - MYSQL_DATABASE=diary
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - TZ=Asia/Seoul
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - /db/mysql/data:/var/lib/mysql
+    networks:
+      - basic_network
+
+  application:
+    container_name: api-server
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      mysql:
+        condition: service_healthy
+    networks:
+      - basic_network
+
+networks:
+  basic_network:
