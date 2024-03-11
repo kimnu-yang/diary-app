@@ -2,6 +2,8 @@ version: "1"
 services:
   mysql:
     image: mysql:8.0.26
+    cap_add:
+      - SYS_NICE
     restart: always
     command:
       - --lower_case_table_names=1
@@ -14,6 +16,12 @@ services:
       - MYSQL_DATABASE=diary
       - MYSQL_ROOT_PASSWORD=root123!
       - TZ=Asia/Seoul
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+    volumes:
+      - /db/mysql/data:/var/lib/mysql
     networks:
       - basic_network
 
@@ -26,7 +34,8 @@ services:
     ports:
       - "8080:8080"
     depends_on:
-      - mysql
+      mysql:
+        condition: service_healthy
     networks:
       - basic_network
 
