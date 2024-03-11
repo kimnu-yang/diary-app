@@ -11,7 +11,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root123!
+    password: ${MYSQL_ROOT_PASSWORD}
 token:
   secret:
     key: DiaryAPIJWTSecretKeyValueYangKangDuoplay
