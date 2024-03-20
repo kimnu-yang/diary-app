@@ -1,28 +1,28 @@
 name: Build and Run API on Self-hosted Runner
 
-# 풀리퀘스트를 통한 머지가 발생할때 실행
+# 풀리퀘스트를 통한 머지 혹은 push가 발생할때 실행
 on:
+  push:
+    branches: [ main ]
   pull_request:
-    types:
-      - closed
+    branches: [ main ]
 
 jobs:
   build:
-    runs-on: self-hosted
-
+    runs-on: [self-hosted, linux]
     steps:
       # 최신 버전의 소스를 불러온다
       - name: Checkout Repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      # 프로젝트를 빌드한다
+      # .env 파일 복사
+      - name: Copy .env File
+        run: cp ~/env ./.env
+
+      # 프로젝트를 빌드
       - name: Build Project
-        run: .\gradlew build
+        run: ./gradlew build
 
-      # java 파일을 담을 디렉토리를 생성
-      - name: Make directory
-        run: mkdir .\api\deploy
-
-      # 빌드 파일을 복사한다.
-      - name: Copy jar
-        run: cp -Force .\api\build\libs\*.jar .\api\deploy\api-latest.jar
+      # docker On
+      - name: docker on
+        run: sudo docker compose up -d --build
