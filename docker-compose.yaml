@@ -38,6 +38,8 @@ services:
     depends_on:
       mysql:
         condition: service_healthy
+    volumes:
+      - /home/rocky/logs:/logs
     networks:
       - basic_network
 
