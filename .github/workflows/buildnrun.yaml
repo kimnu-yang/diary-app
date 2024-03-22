@@ -4,8 +4,9 @@ name: Build and Run API on Self-hosted Runner
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  # 해당 옵션은 풀리퀘스트가 생성된 경우에도 동작되므로 제거
+  # pull_request:
+  #   branches: [ main ]
 
 jobs:
   build:
